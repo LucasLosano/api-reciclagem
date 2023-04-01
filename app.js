@@ -5,6 +5,8 @@ var bodyParser = require('body-parser');
 
 var departamentos = require('./routes/departamentos');
 
+var recompensas = require('./routes/recompensas');
+
 var app = express();
 
 app.use(bodyParser.json());
@@ -12,6 +14,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser())
 
 app.use('/api/v1/departamentos', departamentos);
+
+app.use('/api/v1/recompensas', recompensas);
 
 module.exports = app;
 
