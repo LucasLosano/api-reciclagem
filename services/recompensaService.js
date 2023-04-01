@@ -15,22 +15,37 @@ class recompensaService{
 
     getRecompensaId(id){
         let recompensa = this.recompensas.get(parseInt(id));
-
         if (recompensa === undefined)
-            return undefined;
+            throw {'status': 404,'mensagem':'Recompensa não existe ou não foi encontrado'};
 
         return new recompensaDTO(recompensa);
     }
 
     addRecompensa(recompensaNova){
+        let auxRecompensa = this.recompensas.get(recompensaNova.id);
+
+        if(auxRecompensa !== undefined)
+            throw {'status': 400,'mensagem':'Um recompensa com esse Id já foi criado'};
+
         this.recompensas.set(recompensaNova.id, new recompensa(recompensaNova));
+
+        return this.getRecompensaId(recompensaNova.id);
     }
 
     updateRecompensa(recompensaAtualizada){
-        this.recompensas.set(recompensaAtualizada.id, new recompensa(recompensaAtualizada));
+        let auxRecompensa = this.recompensas.get(parseInt(recompensaAtualizada.id));
+
+        if (auxRecompensa === undefined)
+            throw {'status': 404,'mensagem':'Recompensa não existe ou não foi encontrado'};
+        this.recompensas.set(auxRecompensa.id, new recompensa(recompensaAtualizada));
+
+        return this.getRecompensaId(recompensaAtualizada.id);
     }
 
     deleteRecompensa(id){
+        let recompensa = this.recompensas.get(parseInt(id));
+        if (recompensa === undefined)
+            throw {'status': 404,'mensagem':'Recompensa não existe ou não foi encontrado'};
         return this.recompensas.delete(id);
     }
 }

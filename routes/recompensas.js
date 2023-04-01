@@ -2,58 +2,72 @@ var express = require('express');
 var router = express.Router();
 
 const recompensaService = require('../services/recompensaService');
+const retornoAPI = require('../entities/retornoAPI');
 var recompensas = new recompensaService();
 
-router.get('/', function(req, res) {
-  res.json({recompensas: recompensas.getRecompensa()});
+router.get('/', function (req, res) {
+  try {
+    res.json(new retornoAPI({ sucesso: true, retorno: recompensas.getRecompensa(), erro: '' }));
+
+  } catch (erro) {
+    let status = erro.status !== undefined ? erro.status : 500;
+    let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro.message;
+
+    res.status(status).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage }));
+  }
 });
 
-router.get('/:id', function(req, res) {
-  let id = req.params.id;
-  let recompensa = recompensas.getRecompensaId(id);
-  if(recompensa === undefined){
-    res.sendStatus(404);
-    return;
-  }
+router.get('/:id', function (req, res) {
+  try {
+    let id = parseInt(req.params.id);
 
-  res.json({recompensas: recompensas.getRecompensaId(recompensa.id)});
+    res.json(new retornoAPI({ sucesso: true, retorno: recompensas.getRecompensaId(id), erro: '' }));
+  } catch (erro) {
+    let status = erro.status !== undefined ? erro.status : 500;
+    let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro.message;
+
+    res.status(status).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage }));
+  }
 });
 
-router.post('/', function(req, res) {
-  let recompensaNova = req.body;
-  let recompensa = recompensas.getRecompensaId(recompensaNova.id);
+router.post('/', function (req, res) {
+  try {
+    let recompensaNova = req.body;
 
-  if(recompensa !== undefined){
-    res.sendStatus(400);
-    return;
+    res.status(201).json(new retornoAPI({ sucesso: true, retorno: recompensas.addRecompensa(recompensaNova), erro: '' }));
+  } catch (erro) {
+    let status = erro.status !== undefined ? erro.status : 500;
+    let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro.message;
+
+    res.status(status).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage }));
   }
-
-  recompensas.addRecompensa(recompensaNova);
-  res.sendStatus(201);
 });
 
-router.put('/', function(req, res) {
-  let recompensaAtualizada = req.body;
-  let recompensa = recompensas.getRecompensaId(recompensaAtualizada.id);
-  if(recompensa === undefined){
-    res.sendStatus(404);
-    return;
-  }
+router.put('/', function (req, res) {
+  try {
+    let recompensaAtualizada = req.body;
 
-  recompensas.updateRecompensa(recompensaAtualizada);
-  res.sendStatus(200);
+    
+    res.json(new retornoAPI({ sucesso: true, retorno: recompensas.updateRecompensa(recompensaAtualizada), erro: '' }));
+  } catch (erro) {
+    let status = erro.status !== undefined ? erro.status : 500;
+    let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro.message;
+
+    res.status(status).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage }));
+  }
 });
 
-router.delete('/:id', function(req, res) {
-  let id = req.params.id;
-  let recompensa = recompensas.getRecompensaId(id);
-  if(recompensa === undefined){
-    res.sendStatus(404);
-    return;
+router.delete('/:id', function (req, res) {
+  try {
+    let id = parseInt(req.params.id);
+
+    res.json(new retornoAPI({ sucesso: true, retorno: recompensas.deleteRecompensa(id), erro: '' }));
+  } catch (erro) {
+    let status = erro.status !== undefined ? erro.status : 500;
+    let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro.message;
+
+    res.status(status).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage }));
   }
-  
-  recompensas.deleteRecompensa(recompensa.id)
-  res.sendStatus(200);
 });
 
 module.exports = router;
