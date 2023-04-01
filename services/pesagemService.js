@@ -13,7 +13,7 @@ class pesagemService{
 
     addPesagem(pesagemNova){
         let auxPesagem = this.pesagens.get(pesagemNova.id);
-        departamentos.getDepartamentoById(pesagemNova.id);
+        departamentos.getDepartamentoById(pesagemNova.departamentoId);
         
         if(auxPesagem !== undefined)
             throw {'status': 400,'mensagem':'Um pesagem com esse Id já foi criado'};
