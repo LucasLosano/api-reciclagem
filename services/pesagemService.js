@@ -1,6 +1,8 @@
 const pesagem = require('../entities/pesagem');
 const pesagemDTO = require('../entities/DTOs/pesagemDTO');
 
+const departamentoService = require('../services/departamentoService');
+var departamentos = new departamentoService();
 
 class pesagemService{
     constructor(){
@@ -11,9 +13,11 @@ class pesagemService{
 
     addPesagem(pesagemNova){
         let auxPesagem = this.pesagens.get(pesagemNova.id);
+        departamentos.getDepartamentoById(pesagemNova.id);
         
         if(auxPesagem !== undefined)
             throw {'status': 400,'mensagem':'Um pesagem com esse Id já foi criado'};
+        
         
         this.pesagens.set(pesagemNova.id, new pesagem(pesagemNova));
 

@@ -2,10 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 const pesagemService = require('../services/pesagemService');
-const departamentoService = require('../services/departamentoService');
 const retornoAPI = require('../entities/retornoAPI');
 var pesagens = new pesagemService();
-var departamentos = new departamentoService();
 
 router.get('/', function (req, res) {
     try {
