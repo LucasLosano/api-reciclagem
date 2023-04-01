@@ -12,23 +12,34 @@ class departamentoService{
     }
 
     getDepartamentoById(id){
-        let departamento = this.departamentos.get(parseInt(id));
-
+        let departamento = this.departamentos.get(id);
         if (departamento === undefined)
-            return undefined;
+            throw {'status': 404,'mensagem':'Departamento não existe ou não foi encontrado'};
 
         return new departamentoDTO(departamento);
     }
 
     addDepartamento(departamentoNovo){
+        let auxDepartamento = this.departamentos.get(id);
+        if(auxDepartamento !== undefined)
+            throw {'status': 400,'mensagem':'Um departamento com esse Id já foi criado'};
+
         this.departamentos.set(departamentoNovo.id, new departamento(departamentoNovo));
     }
 
     updateDepartamento(departamentoAtualizado){
+        let departamento = this.departamentos.get(departamentoAtualizado.id);
+        if (departamento === undefined)
+            throw {'status': 404,'mensagem':'Departamento não existe ou não foi encontrado'};
+
         this.departamentos.set(departamentoAtualizado.id, new departamento(departamentoAtualizado));
     }
 
     deleteDepartamento(id){
+        let departamento = this.departamentos.get(id);
+        if (departamento === undefined)
+            throw {'status': 404,'mensagem':'Departamento não existe ou não foi encontrado'};
+
         return this.departamentos.delete(id);
     }
 }
