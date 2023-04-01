@@ -24,11 +24,11 @@ class departamentoService{
     }
 
     addDepartamento(departamentoNovo){
-        return this.departamentos.set(departamento.id, new departamento(departamentoNovo));
+        this.departamentos.set(departamentoNovo.id, new departamento(departamentoNovo));
     }
 
     updateDepartamento(departamentoAtualizado){
-        return this.departamentos.set(departamento.id, new departamento(departamentoAtualizado));
+        this.departamentos.set(departamento.id, new departamento(departamentoAtualizado));
     }
 
     deleteDepartamento(id){

@@ -1,3 +1,5 @@
+// const material = require('../material');
+
 class pesagemDTO{
     constructor(objeto){
         this.id = objeto.id;

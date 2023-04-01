@@ -52,7 +52,7 @@ router.delete('/:id', function(req, res) {
     return;
   }
   
-  departamentos.deleteDepartamento(id)
+  departamentos.deleteDepartamento(departamento.id)
   res.sendStatus(200);
 });
 
