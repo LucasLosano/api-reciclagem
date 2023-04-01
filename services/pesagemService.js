@@ -15,10 +15,6 @@ class pesagemService{
 
     getPesagem(){
         let pesagens = Array.from(this.pesagens.values()).map(pesagem => new pesagemDTO(pesagem));
-
-        if (pesagens.size === 0)
-            return undefined;
-
         return pesagens;
     }
 
@@ -27,7 +23,7 @@ class pesagemService{
 
         if (pesagem === undefined)
             return undefined;
-
+ 
         return new pesagemDTO(pesagem);
     }
 }
