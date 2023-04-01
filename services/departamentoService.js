@@ -8,19 +8,27 @@ class departamentoService{
         this.departamentos.set(2, new departamento({ 'id':2, 'nome':'RH'}));
     }
     getDepartamentos(){
+        if (this.departamentos.size === 0)
+            return undefined;
+
         return Array.from(this.departamentos.values()).map(departamento => new departamentoDTO(departamento));
     }
 
     getDepartamentoById(id){
-        return new departamentoDTO(this.departamentos.get(parseInt(id)));
+        let departamento = this.departamentos.get(parseInt(id));
+
+        if (departamento === undefined)
+            return undefined;
+
+        return new departamentoDTO(departamento);
     }
 
     addDepartamento(departamentoNovo){
-        return this.departamentos.set(departamento.id, new departamento(departamentoNovo));
+        this.departamentos.set(departamentoNovo.id, new departamento(departamentoNovo));
     }
 
     updateDepartamento(departamentoAtualizado){
-        return this.departamentos.set(departamento.id, new departamento(departamentoAtualizado));
+        this.departamentos.set(departamento.id, new departamento(departamentoAtualizado));
     }
 
     deleteDepartamento(id){

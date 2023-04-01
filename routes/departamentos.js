@@ -46,12 +46,13 @@ router.put('/', function(req, res) {
 router.delete('/:id', function(req, res) {
   let id = req.params.id;
   let departamento = departamentos.getDepartamentoById(id);
+
   if(departamento === undefined){
     res.sendStatus(404);
     return;
   }
   
-  departamentos.deleteDepartamento(id)
+  departamentos.deleteDepartamento(departamento.id)
   res.sendStatus(200);
 });
 
