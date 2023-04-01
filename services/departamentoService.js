@@ -8,9 +8,6 @@ class departamentoService{
         this.departamentos.set(2, new departamento({ 'id':2, 'nome':'RH'}));
     }
     getDepartamentos(){
-        if (this.departamentos.size === 0)
-            return undefined;
-
         return Array.from(this.departamentos.values()).map(departamento => new departamentoDTO(departamento));
     }
 
@@ -28,7 +25,7 @@ class departamentoService{
     }
 
     updateDepartamento(departamentoAtualizado){
-        this.departamentos.set(departamento.id, new departamento(departamentoAtualizado));
+        this.departamentos.set(departamentoAtualizado.id, new departamento(departamentoAtualizado));
     }
 
     deleteDepartamento(id){
