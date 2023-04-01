@@ -2,58 +2,70 @@ var express = require('express');
 var router = express.Router();
 
 const departamentoService = require('../services/departamentoService');
+const retornoAPI = require('../entities/retornoAPI');
 var departamentos = new departamentoService();
 
-router.get('/', function(req, res) {
-  res.json({departamentos: departamentos.getDepartamentos()});
+router.get('/', function (req, res) {
+  try {
+    res.json(new retornoAPI({ sucesso: true, retorno: departamentos.getDepartamentos(), erro: '' }));
+  } catch (erro) {
+    let status = erro.status !== undefined ? erro.status : 500;
+    let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro;
+
+    res.status(status).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage }));
+  }
 });
 
-router.get('/:id', function(req, res) {
-  let id = req.params.id;
-  let departamento = departamentos.getDepartamentoById(id);
-  if(departamento === undefined){
-    res.sendStatus(404);
-    return;
-  }
+router.get('/:id', function (req, res) {
+  try {
+    let id = parseInt(req.params.id);
 
-  res.json({departamentos: departamentos.getDepartamentoById(departamento.id)});
+    res.json(new retornoAPI({ sucesso: true, retorno: departamentos.getDepartamentoById(id), erro: '' }));
+  } catch (erro) {
+    let status = erro.status !== undefined ? erro.status : 500;
+    let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro;
+
+    res.status(status).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage }));
+  }
 });
 
-router.post('/', function(req, res) {
-  let departamentoNovo = req.body;
-  let departamento = departamentos.getDepartamentoById(departamentoNovo.id);
-  if(departamento !== undefined){
-    res.sendStatus(400);
-    return;
-  }
+router.post('/', function (req, res) {
+  try {
+    let departamentoNovo = req.body;
 
-  departamentos.addDepartamento(departamentoNovo);
-  res.sendStatus(201);
+    res.status(201).json(new retornoAPI({ sucesso: true, retorno: addDepartamento(departamentoNovo), erro: '' }));
+  } catch (erro) {
+    let status = erro.status !== undefined ? erro.status : 500;
+    let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro;
+
+    res.status(status).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage }));
+  }
 });
 
-router.put('/', function(req, res) {
-  let departamentoAtualizado = req.body;
-  let departamento = departamentos.getDepartamentoById(departamentoAtualizado.id);
-  if(departamento === undefined){
-    res.sendStatus(404);
-    return;
-  }
+router.put('/', function (req, res) {
+  try {
+    let departamentoAtualizado = req.body;
 
-  departamentos.updateDepartamento(departamentoAtualizado);
-  res.sendStatus(200);
+    res.json(new retornoAPI({ sucesso: true, retorno: departamentos.updateDepartamento(departamentoAtualizado), erro: '' }));
+  } catch (erro) {
+    let status = erro.status !== undefined ? erro.status : 500;
+    let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro;
+
+    res.status(status).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage }));
+  }
 });
 
-router.delete('/:id', function(req, res) {
-  let id = req.params.id;
-  let departamento = departamentos.getDepartamentoById(id);
+router.delete('/:id', function (req, res) {
+  try {
+    let id = parseInt(req.params.id);
 
-  if(departamento === undefined){
-    res.sendStatus(404);
-    return;
+    res.json(new retornoAPI({ sucesso: true, retorno: departamentos.deleteDepartamento(id), erro: '' }));
+  } catch (erro) {
+    let status = erro.status !== undefined ? erro.status : 500;
+    let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro;
+
+    res.status(status).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage }));
   }
-  
-  departamentos.deleteDepartamento(departamento.id)
-  res.sendStatus(200);
 });
 
 module.exports = router;
