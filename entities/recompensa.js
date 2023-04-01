@@ -8,7 +8,7 @@ class recompensa {
             typeof objeto.pontosNecessarios !== 'number') {
             throw {'status': 400,'mensagem':'Parâmetros inválidos'};
         }
-
+        
         this.id = objeto.id;
         this.nome = objeto.nome;
         this.pontosNecessarios = objeto.pontosNecessarios;

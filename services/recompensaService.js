@@ -22,18 +22,24 @@ class recompensaService{
     }
 
     addRecompensa(recompensaNova){
-        let auxRecompensa = this.recompensas.get(id);
+        let auxRecompensa = this.recompensas.get(recompensaNova.id);
+
         if(auxRecompensa !== undefined)
             throw {'status': 400,'mensagem':'Um recompensa com esse Id já foi criado'};
 
         this.recompensas.set(recompensaNova.id, new recompensa(recompensaNova));
+
+        return this.getRecompensaId(recompensaNova.id);
     }
 
     updateRecompensa(recompensaAtualizada){
-        let recompensa = this.recompensas.get(parseInt(id));
-        if (recompensa === undefined)
+        let auxRecompensa = this.recompensas.get(parseInt(recompensaAtualizada.id));
+
+        if (auxRecompensa === undefined)
             throw {'status': 404,'mensagem':'Recompensa não existe ou não foi encontrado'};
-        this.recompensas.set(recompensaAtualizada.id, new recompensa(recompensaAtualizada));
+        this.recompensas.set(auxRecompensa.id, new recompensa(recompensaAtualizada));
+
+        return this.getRecompensaId(recompensaAtualizada.id);
     }
 
     deleteRecompensa(id){

@@ -12,7 +12,7 @@ router.get('/', function (req, res) {
         res.json(new retornoAPI({ sucesso: true, retorno: pesagens.getPesagem(), erro: '' }));
     } catch (erro) {
         let status = erro.status !== undefined ? erro.status : 500;
-        let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro;
+        let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro.message;
 
         res.status(status).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage }));
     }
@@ -25,7 +25,7 @@ router.get('/:id', function (req, res) {
         res.json(new retornoAPI({ sucesso: true, retorno: pesagens.getPesagemById(id), erro: '' }));
     } catch (erro) {
         let status = erro.status !== undefined ? erro.status : 500;
-        let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro;
+        let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro.message;
 
         res.status(status).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage }));
     }
@@ -38,7 +38,7 @@ router.post('/', function (req, res) {
         res.status(201).json(new retornoAPI({ sucesso: true, retorno: pesagens.addPesagem(pesagemNova), erro: '' }));
     } catch (erro) {
         let status = erro.status !== undefined ? erro.status : 500;
-        let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro;
+        let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro.message;
 
         res.status(status).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage }));
     }

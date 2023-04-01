@@ -1,5 +1,6 @@
 const exception = require('../entities/DTOs/departamentoDTO');
 const material = require('../entities/material');
+var moment = require('moment');
 
 class pesagem {
     constructor(objeto) {
@@ -15,7 +16,7 @@ class pesagem {
         this.peso = objeto.peso;
         this.tipoMaterial = material.getTipoById(objeto.tipoMaterial);
         this.departamentoId = objeto.departamentoId;
-        this.dataHora = objeto.dataHora;
+        this.dataHora = moment().format('DD-MM-yyyy:hh:mm:ss');
     }
 }
 

@@ -10,7 +10,7 @@ router.get('/', function (req, res) {
     res.json(new retornoAPI({ sucesso: true, retorno: departamentos.getDepartamentos(), erro: '' }));
   } catch (erro) {
     let status = erro.status !== undefined ? erro.status : 500;
-    let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro;
+    let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro.message;
 
     res.status(status).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage }));
   }
@@ -23,7 +23,7 @@ router.get('/:id', function (req, res) {
     res.json(new retornoAPI({ sucesso: true, retorno: departamentos.getDepartamentoById(id), erro: '' }));
   } catch (erro) {
     let status = erro.status !== undefined ? erro.status : 500;
-    let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro;
+    let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro.message;
 
     res.status(status).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage }));
   }
@@ -33,10 +33,10 @@ router.post('/', function (req, res) {
   try {
     let departamentoNovo = req.body;
 
-    res.status(201).json(new retornoAPI({ sucesso: true, retorno: addDepartamento(departamentoNovo), erro: '' }));
+    res.status(201).json(new retornoAPI({ sucesso: true, retorno: departamentos.addDepartamento(departamentoNovo), erro: '' }));
   } catch (erro) {
     let status = erro.status !== undefined ? erro.status : 500;
-    let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro;
+    let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro.message;
 
     res.status(status).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage }));
   }
@@ -49,7 +49,7 @@ router.put('/', function (req, res) {
     res.json(new retornoAPI({ sucesso: true, retorno: departamentos.updateDepartamento(departamentoAtualizado), erro: '' }));
   } catch (erro) {
     let status = erro.status !== undefined ? erro.status : 500;
-    let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro;
+    let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro.message;
 
     res.status(status).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage }));
   }
@@ -62,7 +62,7 @@ router.delete('/:id', function (req, res) {
     res.json(new retornoAPI({ sucesso: true, retorno: departamentos.deleteDepartamento(id), erro: '' }));
   } catch (erro) {
     let status = erro.status !== undefined ? erro.status : 500;
-    let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro;
+    let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro.message;
 
     res.status(status).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage }));
   }

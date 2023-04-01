@@ -20,19 +20,24 @@ class departamentoService{
     }
 
     addDepartamento(departamentoNovo){
-        let auxDepartamento = this.departamentos.get(id);
+        let auxDepartamento = this.departamentos.get(departamentoNovo.id);
+
         if(auxDepartamento !== undefined)
             throw {'status': 400,'mensagem':'Um departamento com esse Id já foi criado'};
 
         this.departamentos.set(departamentoNovo.id, new departamento(departamentoNovo));
+
+        return this.getDepartamentoById(departamentoNovo.id);
     }
 
     updateDepartamento(departamentoAtualizado){
-        let departamento = this.departamentos.get(departamentoAtualizado.id);
-        if (departamento === undefined)
+        let auxDepartamento = this.departamentos.get(departamentoAtualizado.id);
+        if (auxDepartamento === undefined)
             throw {'status': 404,'mensagem':'Departamento não existe ou não foi encontrado'};
 
         this.departamentos.set(departamentoAtualizado.id, new departamento(departamentoAtualizado));
+
+        return this.getDepartamentoById(departamentoAtualizado.id);
     }
 
     deleteDepartamento(id){
