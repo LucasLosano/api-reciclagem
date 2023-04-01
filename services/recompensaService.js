@@ -10,9 +10,6 @@ class recompensaService{
     getRecompensa(){
         let recompensas = Array.from(this.recompensas.values()).map(recompensa => new recompensaDTO(recompensa));
 
-        if (recompensas.size === 0)
-            return undefined;
-
         return recompensas;
     }
 
