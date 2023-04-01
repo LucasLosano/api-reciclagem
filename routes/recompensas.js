@@ -22,6 +22,7 @@ router.get('/:id', function(req, res) {
 router.post('/', function(req, res) {
   let recompensaNova = req.body;
   let recompensa = recompensas.getRecompensaId(recompensaNova.id);
+
   if(recompensa !== undefined){
     res.sendStatus(400);
     return;
@@ -32,14 +33,14 @@ router.post('/', function(req, res) {
 });
 
 router.put('/', function(req, res) {
-  let recompensaAtulizada = req.body;
-  let recompensa = recompensas.getRecompensaId(recompensaAtulizada.id);
+  let recompensaAtualizada = req.body;
+  let recompensa = recompensas.getRecompensaId(recompensaAtualizada.id);
   if(recompensa === undefined){
     res.sendStatus(404);
     return;
   }
 
-  recompensas.updateRecompensa(recompensaAtulizada);
+  recompensas.updateRecompensa(recompensaAtualizada);
   res.sendStatus(200);
 });
 
@@ -51,7 +52,7 @@ router.delete('/:id', function(req, res) {
     return;
   }
   
-  recompensa.deleteRecompensa(id)
+  recompensas.deleteRecompensa(recompensa.id)
   res.sendStatus(200);
 });
 

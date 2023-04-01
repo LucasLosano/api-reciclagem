@@ -1,26 +1,36 @@
-const recompensas = require('../entities/recompensa');
+const recompensa = require('../entities/recompensa');
 const recompensaDTO = require('../entities/DTOs/recompensaDTO');
 
 class recompensaService{
     constructor(){
         this.recompensas = new Map();        
-        this.recompensas.set(10, new recompensas({ 'id':10, 'nome':'Caneca' , 'pontosNecessarios': 30}));
-        this.recompensas.set(12, new recompensas({ 'id':12, 'nome':'Caderno' , 'pontosNecessarios': 50 }));
+        this.recompensas.set(10, new recompensa({ 'id':10, 'nome':'Caneca', 'pontosNecessarios': 30}));
+        this.recompensas.set(12, new recompensa({ 'id':12, 'nome':'Caderno', 'pontosNecessarios': 50 }));
     }
     getRecompensa(){
-        return Array.from(this.recompensas.values()).map(recompensa => new recompensaDTO(recompensa));
+        let recompensas = Array.from(this.recompensas.values()).map(recompensa => new recompensaDTO(recompensa));
+
+        if (recompensas.size === 0)
+            return undefined;
+
+        return recompensas;
     }
 
     getRecompensaId(id){
-        return new recompensaDTO(this.recompensas.get(parseInt(id)));
+        let recompensa = this.recompensas.get(parseInt(id));
+
+        if (recompensa === undefined)
+            return undefined;
+
+        return new recompensaDTO(recompensa);
     }
 
     addRecompensa(recompensaNova){
-        return this.recompensas.set(recompensa.id, new recompensa(recompensaNova));
+        this.recompensas.set(recompensaNova.id, new recompensa(recompensaNova));
     }
 
-    updateRecompensa(recompensaAtulizada){
-        return this.recompensas.set(recompensa.id, new recompensa(recompensaAtulizada));
+    updateRecompensa(recompensaAtualizada){
+        this.recompensas.set(recompensaAtualizada.id, new recompensa(recompensaAtualizada));
     }
 
     deleteRecompensa(id){
