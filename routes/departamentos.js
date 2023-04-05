@@ -2,12 +2,12 @@ var express = require('express');
 var router = express.Router();
 
 const departamentoService = require('../services/departamentoService');
+//const pesagemService = require('../services/pesagemService');
 const retornoAPI = require('../entities/retornoAPI');
-var departamentos = new departamentoService();
 
 router.get('/', function (req, res) {
   try {
-    res.json(new retornoAPI({ sucesso: true, retorno: departamentos.getDepartamentos(), erro: '' }));
+    res.json(new retornoAPI({ sucesso: true, retorno: departamentoService.getDepartamentos(), erro: '' }));
   } catch (erro) {
     let status = erro.status !== undefined ? erro.status : 500;
     let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro.message;
@@ -20,7 +20,7 @@ router.get('/:id', function (req, res) {
   try {
     let id = parseInt(req.params.id);
 
-    res.json(new retornoAPI({ sucesso: true, retorno: departamentos.getDepartamentoById(id), erro: '' }));
+    res.json(new retornoAPI({ sucesso: true, retorno: departamentoService.getDepartamentoById(id), erro: '' }));
   } catch (erro) {
     let status = erro.status !== undefined ? erro.status : 500;
     let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro.message;
@@ -33,7 +33,7 @@ router.post('/', function (req, res) {
   try {
     let departamentoNovo = req.body;
 
-    res.status(201).json(new retornoAPI({ sucesso: true, retorno: departamentos.addDepartamento(departamentoNovo), erro: '' }));
+    res.status(201).json(new retornoAPI({ sucesso: true, retorno: departamentoService.addDepartamento(departamentoNovo), erro: '' }));
   } catch (erro) {
     let status = erro.status !== undefined ? erro.status : 500;
     let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro.message;
@@ -46,7 +46,7 @@ router.put('/', function (req, res) {
   try {
     let departamentoAtualizado = req.body;
 
-    res.json(new retornoAPI({ sucesso: true, retorno: departamentos.updateDepartamento(departamentoAtualizado), erro: '' }));
+    res.json(new retornoAPI({ sucesso: true, retorno: departamentoService.updateDepartamento(departamentoAtualizado), erro: '' }));
   } catch (erro) {
     let status = erro.status !== undefined ? erro.status : 500;
     let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro.message;
@@ -59,7 +59,7 @@ router.delete('/:id', function (req, res) {
   try {
     let id = parseInt(req.params.id);
 
-    res.json(new retornoAPI({ sucesso: true, retorno: departamentos.deleteDepartamento(id), erro: '' }));
+    res.json(new retornoAPI({ sucesso: true, retorno: departamentoService.deleteDepartamento(id), erro: '' }));
   } catch (erro) {
     let status = erro.status !== undefined ? erro.status : 500;
     let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro.message;

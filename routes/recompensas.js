@@ -3,11 +3,10 @@ var router = express.Router();
 
 const recompensaService = require('../services/recompensaService');
 const retornoAPI = require('../entities/retornoAPI');
-var recompensas = new recompensaService();
 
 router.get('/', function (req, res) {
   try {
-    res.json(new retornoAPI({ sucesso: true, retorno: recompensas.getRecompensa(), erro: '' }));
+    res.json(new retornoAPI({ sucesso: true, retorno: recompensaService.getRecompensa(), erro: '' }));
 
   } catch (erro) {
     let status = erro.status !== undefined ? erro.status : 500;
@@ -21,7 +20,7 @@ router.get('/:id', function (req, res) {
   try {
     let id = parseInt(req.params.id);
 
-    res.json(new retornoAPI({ sucesso: true, retorno: recompensas.getRecompensaId(id), erro: '' }));
+    res.json(new retornoAPI({ sucesso: true, retorno: recompensaService.getRecompensaId(id), erro: '' }));
   } catch (erro) {
     let status = erro.status !== undefined ? erro.status : 500;
     let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro.message;
@@ -34,7 +33,7 @@ router.post('/', function (req, res) {
   try {
     let recompensaNova = req.body;
 
-    res.status(201).json(new retornoAPI({ sucesso: true, retorno: recompensas.addRecompensa(recompensaNova), erro: '' }));
+    res.status(201).json(new retornoAPI({ sucesso: true, retorno: recompensaService.addRecompensa(recompensaNova), erro: '' }));
   } catch (erro) {
     let status = erro.status !== undefined ? erro.status : 500;
     let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro.message;
@@ -48,7 +47,7 @@ router.put('/', function (req, res) {
     let recompensaAtualizada = req.body;
 
     
-    res.json(new retornoAPI({ sucesso: true, retorno: recompensas.updateRecompensa(recompensaAtualizada), erro: '' }));
+    res.json(new retornoAPI({ sucesso: true, retorno: recompensaService.updateRecompensa(recompensaAtualizada), erro: '' }));
   } catch (erro) {
     let status = erro.status !== undefined ? erro.status : 500;
     let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro.message;
@@ -61,7 +60,7 @@ router.delete('/:id', function (req, res) {
   try {
     let id = parseInt(req.params.id);
 
-    res.json(new retornoAPI({ sucesso: true, retorno: recompensas.deleteRecompensa(id), erro: '' }));
+    res.json(new retornoAPI({ sucesso: true, retorno: recompensaService.deleteRecompensa(id), erro: '' }));
   } catch (erro) {
     let status = erro.status !== undefined ? erro.status : 500;
     let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro.message;
