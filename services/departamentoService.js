@@ -1,17 +1,23 @@
 const departamento = require('../entities/departamento');
 const departamentoDTO = require('../entities/DTOs/departamentoDTO');
+const pesagemService = require('../services/pesagemService');
 
 class departamentoService{
-    constructor(){
-        this.departamentos = new Map();        
-        this.departamentos.set(1, new departamento({ 'id':1, 'nome':'TI'}));
-        this.departamentos.set(2, new departamento({ 'id':2, 'nome':'RH'}));
-    }
-    getDepartamentos(){
-        return Array.from(this.departamentos.values()).map(departamento => new departamentoDTO(departamento));
+    static departamentos = new Map([
+        [1, new departamento({ 'id':1, 'nome':'TI'})],
+        [2, new departamento({ 'id':2, 'nome':'RH'})],
+        [3, new departamento({ 'id':3, 'nome':'Operação'})]]
+    );
+    static getDepartamentos(){
+        return Array.from(this.departamentos.values()).map(
+            departamento => {
+                departamento.pesagens = pesagemService.getPesagemByDepartamentoId(departamento.id);
+                return new departamentoDTO(departamento)
+            }
+        );
     }
 
-    getDepartamentoById(id){
+    static getDepartamentoById(id){
         let departamento = this.departamentos.get(id);
         if (departamento === undefined)
             throw {'status': 404,'mensagem':'Departamento não existe ou não foi encontrado'};
@@ -19,7 +25,7 @@ class departamentoService{
         return new departamentoDTO(departamento);
     }
 
-    addDepartamento(departamentoNovo){
+    static addDepartamento(departamentoNovo){
         let auxDepartamento = this.departamentos.get(departamentoNovo.id);
 
         if(auxDepartamento !== undefined)
@@ -30,7 +36,7 @@ class departamentoService{
         return this.getDepartamentoById(departamentoNovo.id);
     }
 
-    updateDepartamento(departamentoAtualizado){
+    static updateDepartamento(departamentoAtualizado){
         let auxDepartamento = this.departamentos.get(departamentoAtualizado.id);
         if (auxDepartamento === undefined)
             throw {'status': 404,'mensagem':'Departamento não existe ou não foi encontrado'};
@@ -40,7 +46,7 @@ class departamentoService{
         return this.getDepartamentoById(departamentoAtualizado.id);
     }
 
-    deleteDepartamento(id){
+    static deleteDepartamento(id){
         let departamento = this.departamentos.get(id);
         if (departamento === undefined)
             throw {'status': 404,'mensagem':'Departamento não existe ou não foi encontrado'};

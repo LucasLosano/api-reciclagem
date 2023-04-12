@@ -10,6 +10,7 @@ class departamento {
         this.nome = objeto.nome;
         this.pontuaçãoTotal = 0;
         this.quantoGeraDeValor = 0;
+        this.pesagens = [];
     }
 }
 

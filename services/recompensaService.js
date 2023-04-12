@@ -2,18 +2,18 @@ const recompensa = require('../entities/recompensa');
 const recompensaDTO = require('../entities/DTOs/recompensaDTO');
 
 class recompensaService{
-    constructor(){
-        this.recompensas = new Map();        
-        this.recompensas.set(10, new recompensa({ 'id':10, 'nome':'Caneca', 'pontosNecessarios': 30}));
-        this.recompensas.set(12, new recompensa({ 'id':12, 'nome':'Caderno', 'pontosNecessarios': 50 }));
-    }
-    getRecompensa(){
+    static recompensas = new Map([
+        [10, new recompensa({ 'id':10, 'nome':'Caneca', 'pontosNecessarios': 30})],
+        [12, new recompensa({ 'id':12, 'nome':'Caderno', 'pontosNecessarios': 50 })]
+    ]
+    );
+    static getRecompensa(){
         let recompensas = Array.from(this.recompensas.values()).map(recompensa => new recompensaDTO(recompensa));
 
         return recompensas;
     }
 
-    getRecompensaId(id){
+    static getRecompensaId(id){
         let recompensa = this.recompensas.get(parseInt(id));
         if (recompensa === undefined)
             throw {'status': 404,'mensagem':'Recompensa não existe ou não foi encontrado'};
@@ -21,7 +21,7 @@ class recompensaService{
         return new recompensaDTO(recompensa);
     }
 
-    addRecompensa(recompensaNova){
+    static addRecompensa(recompensaNova){
         let auxRecompensa = this.recompensas.get(recompensaNova.id);
 
         if(auxRecompensa !== undefined)
@@ -32,7 +32,7 @@ class recompensaService{
         return this.getRecompensaId(recompensaNova.id);
     }
 
-    updateRecompensa(recompensaAtualizada){
+    static updateRecompensa(recompensaAtualizada){
         let auxRecompensa = this.recompensas.get(parseInt(recompensaAtualizada.id));
 
         if (auxRecompensa === undefined)
@@ -42,7 +42,7 @@ class recompensaService{
         return this.getRecompensaId(recompensaAtualizada.id);
     }
 
-    deleteRecompensa(id){
+    static deleteRecompensa(id){
         let recompensa = this.recompensas.get(parseInt(id));
         if (recompensa === undefined)
             throw {'status': 404,'mensagem':'Recompensa não existe ou não foi encontrado'};
