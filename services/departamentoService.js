@@ -1,58 +1,66 @@
-const departamento = require('../entities/departamento');
 const departamentoDTO = require('../entities/DTOs/departamentoDTO');
 const pesagemService = require('../services/pesagemService');
 
-class departamentoService{
-    static departamentos = new Map([
-        [1, new departamento({ 'id':1, 'nome':'TI'})],
-        [2, new departamento({ 'id':2, 'nome':'RH'})],
-        [3, new departamento({ 'id':3, 'nome':'Operação'})]]
-    );
-    static getDepartamentos(){
-        return Array.from(this.departamentos.values()).map(
-            departamento => {
-                departamento.pesagens = pesagemService.getPesagemByDepartamentoId(departamento.id);
-                return new departamentoDTO(departamento)
-            }
-        );
-    }
+var config = require('../config.json');
+var connection = process.env.connectionStringV2 || config.connectionStringV2;
+var database = process.env.databaseV2 || config.databaseV2;
+const mongo = require('mongodb').MongoClient;
+mongo.connect(connection, { useUnifiedTopology: true })
+    .then(conn => global.conn = conn.db(database))
+    .catch(err => console.log(err));
 
-    static getDepartamentoById(id){
-        let departamento = this.departamentos.get(id);
-        if (departamento === undefined)
-            throw {'status': 404,'mensagem':'Departamento não existe ou não foi encontrado'};
 
-        return new departamentoDTO(departamento);
-    }
+var service = {};
+service.addDepartamento = addDepartamento;
+service.getDepartamentos = getDepartamentos;
+service.getDepartamentoById = getDepartamentoById;
+service.updateDepartamento = updateDepartamento;
+service.deleteDepartamento = deleteDepartamento;
 
-    static addDepartamento(departamentoNovo){
-        let auxDepartamento = this.departamentos.get(departamentoNovo.id);
+module.exports = service;
 
-        if(auxDepartamento !== undefined)
-            throw {'status': 400,'mensagem':'Um departamento com esse Id já foi criado'};
-
-        this.departamentos.set(departamentoNovo.id, new departamento(departamentoNovo));
-
-        return this.getDepartamentoById(departamentoNovo.id);
-    }
-
-    static updateDepartamento(departamentoAtualizado){
-        let auxDepartamento = this.departamentos.get(departamentoAtualizado.id);
-        if (auxDepartamento === undefined)
-            throw {'status': 404,'mensagem':'Departamento não existe ou não foi encontrado'};
-
-        this.departamentos.set(departamentoAtualizado.id, new departamento(departamentoAtualizado));
-
-        return this.getDepartamentoById(departamentoAtualizado.id);
-    }
-
-    static deleteDepartamento(id){
-        let departamento = this.departamentos.get(id);
-        if (departamento === undefined)
-            throw {'status': 404,'mensagem':'Departamento não existe ou não foi encontrado'};
-
-        return this.departamentos.delete(id);
-    }
+async function getDepartamentos(){
+    var departamentos = global.conn.collection("departamentos");
+    const result = await departamentos.find().toArray();
+    return await Promise.all(result.map(
+        async (departamento) => {
+            departamento.pesagens = await pesagemService.getPesagemByDepartamentoId(departamento.id);
+            return new departamentoDTO(departamento)
+        }
+    ));
 }
 
-module.exports = departamentoService;
+async function getDepartamentoById(departamentoId){
+    var departamentos = global.conn.collection("departamentos");
+    var departamento = await departamentos.findOne({ id: departamentoId });
+
+    if (departamento === null)
+        throw {'status': 404,'mensagem':'Departamento não existe ou não foi encontrado'};
+    
+    departamento.pesagens = await pesagemService.getPesagemByDepartamentoId(departamento.id);
+    return new departamentoDTO(departamento);
+}
+
+async function addDepartamento(departamentoNovo){
+    var departamentos = global.conn.collection("departamentos");
+    var departamento = await departamentos.findOne({ id: departamentoNovo.id });
+    if (departamento !== null)
+        throw {'status': 400,'mensagem':'Departamento já existe'};
+
+    await departamentos.insertOne(departamentoNovo);
+    return await this.getDepartamentoById(departamentoNovo.id);
+}
+
+async function updateDepartamento(departamentoAtualizado){
+    await this.getDepartamentoById(departamentoAtualizado.id);
+    let departamentos = global.conn.collection("departamentos");  
+    await departamentos.updateOne({ id: departamentoAtualizado.id }, { $set: departamentoAtualizado });
+    return await this.getDepartamentoById(departamentoAtualizado.id);
+}
+
+async function deleteDepartamento(id){
+    await this.getDepartamentoById(id);
+    let departamentos = global.conn.collection("departamentos");  
+    await departamentos.deleteOne({ id });
+    return await this.getDepartamentos();
+}
