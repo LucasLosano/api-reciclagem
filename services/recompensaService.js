@@ -1,53 +1,58 @@
 const recompensa = require('../entities/recompensa');
 const recompensaDTO = require('../entities/DTOs/recompensaDTO');
 
-class recompensaService{
-    static recompensas = new Map([
-        [10, new recompensa({ 'id':10, 'nome':'Caneca', 'pontosNecessarios': 30})],
-        [12, new recompensa({ 'id':12, 'nome':'Caderno', 'pontosNecessarios': 50 })]
-    ]
-    );
-    static getRecompensa(){
-        let recompensas = Array.from(this.recompensas.values()).map(recompensa => new recompensaDTO(recompensa));
+var config = require('../config.json');
+var connection = process.env.connectionStringV2 || config.connectionStringV2;
+var database = process.env.databaseV2 || config.databaseV2;
+const mongo = require('mongodb').MongoClient;
+mongo.connect(connection, { useUnifiedTopology: true })
+    .then(conn => global.conn = conn.db(database))
+    .catch(err => console.log(err));
 
-        return recompensas;
+var service = {};
+service.getRecompensaById = getRecompensaById;
+service.getRecompensa = getRecompensa;
+service.addRecompensa = addRecompensa;
+service.updateRecompensa = updateRecompensa;
+service.deleteRecompensa = deleteRecompensa;
+
+
+module.exports = service;
+
+    async function getRecompensa(){
+        var recompensas = global.conn.collection("recompensas");
+        const result = await recompensas.find().toArray();
+        return Array.from(result).map(recompensa => new recompensaDTO(recompensa));
     }
 
-    static getRecompensaId(id){
-        let recompensa = this.recompensas.get(parseInt(id));
-        if (recompensa === undefined)
+    async function getRecompensaById(id) {
+        let recompensas = global.conn.collection("recompensas");
+        let recompensa = await recompensas.findOne({id : id});
+        if (recompensa === null)
             throw {'status': 404,'mensagem':'Recompensa não existe ou não foi encontrado'};
-
         return new recompensaDTO(recompensa);
     }
 
-    static addRecompensa(recompensaNova){
-        let auxRecompensa = this.recompensas.get(recompensaNova.id);
+    async function addRecompensa(recompensaNova){
+        var recompensas = global.conn.collection("recompensas");
+        var recompensa = await recompensas.findOne({ id: recompensaNova.id });
+        if (recompensa !== null)
+            throw {'status': 400,'mensagem':'Uma outra recompensa ja está utilizando este Id.'};
 
-        if(auxRecompensa !== undefined)
-            throw {'status': 400,'mensagem':'Um recompensa com esse Id já foi criado'};
-
-        this.recompensas.set(recompensaNova.id, new recompensa(recompensaNova));
-
-        return this.getRecompensaId(recompensaNova.id);
+        await recompensas.insertOne(recompensaNova);
+        return await this.getDepartamentoById(recompensaNova.id);
     }
 
-    static updateRecompensa(recompensaAtualizada){
-        let auxRecompensa = this.recompensas.get(parseInt(recompensaAtualizada.id));
-
-        if (auxRecompensa === undefined)
-            throw {'status': 404,'mensagem':'Recompensa não existe ou não foi encontrado'};
-        this.recompensas.set(auxRecompensa.id, new recompensa(recompensaAtualizada));
-
-        return this.getRecompensaId(recompensaAtualizada.id);
+    async function updateRecompensa(recompensaAtualizada){
+        await this.getRecompensaById(recompensaAtualizada.id);
+        let recompensas = global.conn.collection("recompensas");  
+        await recompensas.updateOne({ id: recompensaAtualizada.id }, { $set: recompensaAtualizada });
+        return await this.getRecompensaById(recompensaAtualizada.id);
     }
-
-    static deleteRecompensa(id){
-        let recompensa = this.recompensas.get(parseInt(id));
-        if (recompensa === undefined)
-            throw {'status': 404,'mensagem':'Recompensa não existe ou não foi encontrado'};
-        return this.recompensas.delete(id);
+    
+    async function deleteRecompensa(id){
+        await this.getRecompensaById(id);
+        let recompensas = global.conn.collection("recompensas");  
+        await recompensas.deleteOne({ id });
+        return await this.getRecompensa();
     }
-}
-
-module.exports = recompensaService;
