@@ -67,15 +67,11 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: node-app
-    - name: 'Az CLI login with subscription'
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     - name: 'Deploy to Azure WebApp'
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        publish-profile: ${{ secrets.AZURE_CREDENTIALS_WEB_APP }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
