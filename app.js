@@ -21,4 +21,4 @@ app.use('/api/v1/recompensas', recompensas);
 
 module.exports = app;
 
-app.listen(3000, () => console.log('Servidor rodando na porta 3000'));
+app.listen(8000, () => console.log('Servidor rodando na porta 8000'));
