@@ -1,0 +1,7 @@
+{
+    "connectionString": "mongodb+srv://llosano3:tqEciyuwqFspSKA6@cluster0.x7dtkut.mongodb.net/api_reciclagem",
+    "connectionStringV2": "mongodb://llosano3:bOeqXcgtwjSafepZatcZuKEicnjErfZz3U5I4VfVwjhkyQWmf2d7sKGzPawDYKlSW4tB2L1Sn7mbACDbpIOQqA%3D%3D@llosano3.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&maxIdleTimeMS=120000&appName=@llosano3@",
+    "databaseV2":"api_reciclagem",
+    "version": "1.0.0",
+    "secret": "MongoSampleSecret-2023"
+}
