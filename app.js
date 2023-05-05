@@ -20,6 +20,3 @@ app.use('/api/v1/pesagens', pesagens);
 app.use('/api/v1/recompensas', recompensas);
 
 module.exports = app;
-
-const port =  process.env.PORT || 8000;
-app.listen(port, () => console.log('Servidor rodando na porta ' + port));
