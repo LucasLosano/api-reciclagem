@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     environment:
-      name: 'Development'
+      name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
@@ -53,6 +53,6 @@ jobs:
         id: deploy-to-webapp
         with:
           app-name: 'EcoGestor-dev'
-          slot-name: 'Development'
+          slot-name: 'Production'
           publish-profile: ${{ secrets.AZURE_WEB_SERVICE_DEVELOPMENT }}
           package: .
