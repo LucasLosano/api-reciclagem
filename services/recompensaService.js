@@ -1,9 +1,8 @@
 const recompensa = require('../entities/recompensa');
 const recompensaDTO = require('../entities/DTOs/recompensaDTO');
 
-var config = require('../config.json');
-var connection = process.env.connectionStringV2 || config.connectionStringV2;
-var database = process.env.databaseV2 || config.databaseV2;
+var connection = process.env.AZURE_MONGODB;
+var database = process.env.AZURE_DATABASE;
 const mongo = require('mongodb').MongoClient;
 mongo.connect(connection, { useUnifiedTopology: true })
     .then(conn => global.conn = conn.db(database))
@@ -40,7 +39,7 @@ module.exports = service;
             throw {'status': 400,'mensagem':'Uma outra recompensa ja está utilizando este Id.'};
 
         await recompensas.insertOne(recompensaNova);
-        return await this.getDepartamentoById(recompensaNova.id);
+        return await this.getRecompensaById(recompensaNova.id);
     }
 
     async function updateRecompensa(recompensaAtualizada){
