@@ -22,18 +22,12 @@ jobs:
           node-version: '18.x'
 
       - name: npm install, build, and test
-        env:
-            AZURE_MONGODB: ${{ secrets.AZURE_MONGODB }}
-            AZURE_DATABASE: 'api_reciclagem'
         run: |
           npm install
           npm run build --if-present
           npm run test --if-present
       
       - name: Upload artifact for deployment job
-        env:
-            AZURE_MONGODB: ${{ secrets.AZURE_MONGODB }}
-            AZURE_DATABASE: 'api_reciclagem'
         uses: actions/upload-artifact@v2
         with:
           name: node-app
@@ -48,17 +42,11 @@ jobs:
 
     steps:
       - name: Download artifact from build job
-        env:
-            AZURE_MONGODB: ${{ secrets.AZURE_MONGODB }}
-            AZURE_DATABASE: 'api_reciclagem'
         uses: actions/download-artifact@v2
         with:
           name: node-app
 
       - name: 'Deploy to Azure Web App'
-        env:
-            AZURE_MONGODB: ${{ secrets.AZURE_MONGODB }}
-            AZURE_DATABASE: 'api_reciclagem'
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
