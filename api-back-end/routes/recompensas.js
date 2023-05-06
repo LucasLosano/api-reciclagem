@@ -19,7 +19,7 @@ router.get('/', function (req, res) {
 
 router.get('/:id', function (req, res) {
   let id = parseInt(req.params.id);
-  recompensaService.getRecompensaId(id)
+  recompensaService.getRecompensaById(id)
     .then(function (recompensa) {
       res.send(new retornoAPI({ sucesso: true, retorno: recompensa, erro: '' }));
     })

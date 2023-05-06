@@ -1,9 +1,8 @@
 const departamentoDTO = require('../entities/DTOs/departamentoDTO');
 const pesagemService = require('../services/pesagemService');
 
-var config = require('../config.json');
-var connection = process.env.connectionStringV2 || config.connectionStringV2;
-var database = process.env.databaseV2 || config.databaseV2;
+var connection = process.env.AZURE_MONGODB;
+var database = process.env.AZURE_DATABASE;
 const mongo = require('mongodb').MongoClient;
 mongo.connect(connection, { useUnifiedTopology: true })
     .then(conn => global.conn = conn.db(database))
