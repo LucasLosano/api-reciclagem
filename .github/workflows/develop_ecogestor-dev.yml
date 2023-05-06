@@ -30,7 +30,8 @@ jobs:
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         env:
-          CONNECTION_STRING: ${{ secrets.AZURE_MONGODB }}
+          AZURE_MONGODB: ${{ secrets.AZURE_MONGODB }}
+          AZURE_DATABASE: 'api_reciclagem'
         with:
           name: node-app
           path: .
