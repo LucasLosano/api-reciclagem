@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'EcoGestor'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0BFFFCCCF0A347AFAB3E569C2A746B94 }}
+          publish-profile: ${{ secrets.AZURE_WEB_SERVICE }}
           package: .
