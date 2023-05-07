@@ -1,0 +1,25 @@
+<div style="text-align: center;">
+    <h1>Departamentos</h1>
+    <button (click)="formFlag = !formFlag" *ngIf="!formFlag" class="add-button" role="button">Adicionar Departamento</button>
+    <button (click)="cancelar()" *ngIf="formFlag" class="cancel-button" role="button">Cancelar</button>
+    <app-departamento-form [departamentoEdit]="departamentoSelect" *ngIf="formFlag"></app-departamento-form>
+    
+</div>
+<div class="table-wrapper">
+    <table class="fl-table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let departamento of departamentos">
+                <td>{{departamento.id}}</td>
+                <td>{{departamento.nome}}</td>
+                <td><button (click)="edit(departamento)" class="edit-button">Edit</button><button (click)="delete(departamento.id)" class="delete-button">Delete</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
