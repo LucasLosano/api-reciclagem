@@ -33,6 +33,8 @@ export class DepartamentoListComponent {
       .subscribe(data => {        
         if(!data.sucesso)
           this.errorMessage = data.error;
+        else
+          window.location.reload();      
       })
   }
 

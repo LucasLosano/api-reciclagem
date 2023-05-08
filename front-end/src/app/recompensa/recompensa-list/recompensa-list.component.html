@@ -1,0 +1,27 @@
+<div style="text-align: center;">
+    <h1>Recompensas</h1>
+    <button (click)="formFlag = !formFlag" *ngIf="!formFlag" class="add-button" role="button">Adicionar Recompensa</button>
+    <button (click)="cancelar()" *ngIf="formFlag" class="cancel-button" role="button">Cancelar</button>
+    <app-recompensa-form [recompensaEdit]="recompensaSelect" *ngIf="formFlag"></app-recompensa-form>
+    
+</div>
+<div class="table-wrapper">
+    <table class="fl-table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Pontos Necessários</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let recompensa of recompensas">
+                <td>{{recompensa.id}}</td>
+                <td>{{recompensa.nome}}</td>
+                <td>{{recompensa.pontosNecessarios}}</td>
+                <td><button (click)="edit(recompensa)" class="edit-button">Edit</button><button (click)="delete(recompensa.id)" class="delete-button">Delete</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
