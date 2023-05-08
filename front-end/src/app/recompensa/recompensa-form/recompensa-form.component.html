@@ -1,0 +1,39 @@
+<div *ngIf="recompensaEdit === undefined" class="form">
+    <div class="input-container">
+      <input [(ngModel)]="recompensaNovo!.id" id="id" class="input" type="number" placeholder=" " />
+      <div class="cut"></div>
+      <label for="id" class="placeholder">Id</label>
+    </div>
+    <div class="input-container">
+      <input [(ngModel)]="recompensaNovo!.nome" id="nome" class="input" type="text" placeholder=" " />
+      <div class="cut"></div>
+      <label for="nome" class="placeholder">Nome</label>
+    </div>
+    <div class="input-container">
+      <input [(ngModel)]="recompensaNovo!.pontosNecessarios" id="pontosNecessarios" class="input" type="number" placeholder=" " />
+      <div class="cut"></div>
+      <label for="nome" class="placeholder">Pontos Necessários</label>
+    </div>
+    <input (click)="adicionar()" type="submit" class="add-button" value="Adicionar">
+    <span *ngIf="errorMessage !== '' ">{{errorMessage}}</span>
+</div>
+
+<div *ngIf="recompensaEdit !== undefined" class="form">
+    <div class="input-container">
+      <input [(ngModel)]="recompensaEdit.id" id="id" class="input" type="number" placeholder=" " />
+      <div class="cut"></div>
+      <label for="id" class="placeholder">Id</label>
+    </div>
+    <div class="input-container">
+      <input [(ngModel)]="recompensaEdit.nome" id="nome" class="input" type="text" placeholder=" " />
+      <div class="cut"></div>
+      <label for="nome" class="placeholder">Nome</label>
+    </div>
+    <div class="input-container">
+        <input [(ngModel)]="recompensaEdit!.pontosNecessarios" id="pontosNecessarios" class="input" type="number" placeholder=" " />
+        <div class="cut"></div>
+        <label for="nome" class="placeholder">Pontos Necessários</label>
+    </div>
+    <input (click)="alterar()" type="submit" class="add-button" value="Alterar">
+    <span *ngIf="errorMessage !== '' ">{{errorMessage}}</span>
+</div>

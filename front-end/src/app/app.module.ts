@@ -9,13 +9,17 @@ import { DepartamentoListComponent } from './departamento/departamento-list/depa
 import { DepartamentoFormComponent } from './departamento/departamento-form/departamento-form.component';
 import { FormsModule } from '@angular/forms';
 import { MenuComponent } from './menu/menu.component';
+import { RecompensaListComponent } from './recompensa/recompensa-list/recompensa-list.component';
+import { RecompensaFormComponent } from './recompensa/recompensa-form/recompensa-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DepartamentoListComponent,
     DepartamentoFormComponent,
-    MenuComponent
+    MenuComponent,
+    RecompensaListComponent,
+    RecompensaFormComponent
   ],
   imports: [
     BrowserModule,
