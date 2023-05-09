@@ -10,6 +10,7 @@ import { DepartamentoService } from 'src/app/services/departamento.service';
 })
 export class DepartamentoFormComponent {
   @Input() departamentoEdit?: DepartamentoModel = undefined;
+  @Input() departamentos: DepartamentoModel[] = [];
   errorMessage: string = "";
   departamentoNovo: DepartamentoModel = {} as DepartamentoModel;
 
@@ -24,7 +25,8 @@ export class DepartamentoFormComponent {
       if(!data.sucesso)        
         this.errorMessage = data.error;
       
-        window.location.reload();
+      console.log("Inside subscriber")
+      this.atualizarLista()
     });
   }
   alterar(){
@@ -33,7 +35,18 @@ export class DepartamentoFormComponent {
       if(!data.sucesso)        
         this.errorMessage = data.error;
       
-        window.location.reload();
+      this.atualizarLista()
     });
+  }
+
+  atualizarLista(){
+    this.departamentoService.getAll()
+      .subscribe(data => {      
+        console.log("Atualizar" + data.retorno)  
+        if(data.sucesso)
+          this.departamentos = data.retorno;
+        else
+          this.errorMessage = data.error;
+      })
   }
 }
