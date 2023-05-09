@@ -29,21 +29,24 @@ export class RecompensaListComponent {
   }
 
   delete(id: number){
-    console.log(id + " Antes do método");
     this.recompensaService.deleteById(id)
       .subscribe(data => {        
-        if(!data.sucesso)
-          this.errorMessage = data.error;
+        this.errorMessage = data.error;      
+        if(data.sucesso)
+          window.location.reload();  
       })
   }
 
   ngOnInit() {
+    this.atualizarLista();
+  }
+
+  atualizarLista(){
     this.recompensaService.getAll()
       .subscribe(data => {        
+        this.errorMessage = data.error;      
         if(data.sucesso)
-          this.recompensas = data.retorno;
-        else
-          this.errorMessage = data.error;
+          this.recompensas = data.retorno; 
       })
   }
 }

@@ -11,7 +11,7 @@ export class DepartamentoService {
 
   constructor(private http: HttpClient) { }
 
-  private baseURL = `https://ecogestor-dev.azurewebsites.net/api/v1/departamentos`;
+  private baseURL = `http://ecogestor-dev.azurewebsites.net/api/v1/departamentos`;
 
   getAll(): Observable<any> {
     return this.http.get(this.baseURL);
@@ -22,11 +22,10 @@ export class DepartamentoService {
   }
 
   deleteById(id: number): Observable<any> {
-    console.log(this.baseURL + "/" + id);
     return this.http.delete(this.baseURL + "/" + id);
   }
 
-  put(data: DepartamentoModel): Observable<any> {
+  put(data: DepartamentoModel): Observable<any> {    
     return this.http.put(this.baseURL, data);
   }
 }

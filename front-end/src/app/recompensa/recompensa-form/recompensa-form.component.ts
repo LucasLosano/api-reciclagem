@@ -19,22 +19,19 @@ export class RecompensaFormComponent {
   }
 
   adicionar(){
-    console.log(this.recompensaNovo)
     this.recompensaService.create(this.recompensaNovo!)
     .subscribe(data => {        
-      if(!data.sucesso)        
-        this.errorMessage = data.error;
-      
-        window.location.reload();
+      this.errorMessage = data.error;      
+      if(data.sucesso)
+        window.location.reload();  
     });
   }
   alterar(){
     this.recompensaService.put(this.recompensaEdit!)
     .subscribe(data => {        
-      if(!data.sucesso)        
-        this.errorMessage = data.error;
-      
-        window.location.reload();
+      this.errorMessage = data.error;      
+      if(data.sucesso)
+        window.location.reload();  
     });
   }
 }

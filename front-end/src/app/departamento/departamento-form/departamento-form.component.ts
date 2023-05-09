@@ -22,31 +22,17 @@ export class DepartamentoFormComponent {
   adicionar(){
     this.departamentoService.create(this.departamentoNovo!)
     .subscribe(data => {        
-      if(!data.sucesso)        
-        this.errorMessage = data.error;
-      
-      console.log("Inside subscriber")
-      this.atualizarLista()
+      this.errorMessage = data.error;      
+      if(data.sucesso)
+        window.location.reload();    
     });
   }
   alterar(){
     this.departamentoService.put(this.departamentoEdit!)
     .subscribe(data => {        
-      if(!data.sucesso)        
-        this.errorMessage = data.error;
-      
-      this.atualizarLista()
+      this.errorMessage = data.error;      
+      if(data.sucesso)
+        window.location.reload();      
     });
-  }
-
-  atualizarLista(){
-    this.departamentoService.getAll()
-      .subscribe(data => {      
-        console.log("Atualizar" + data.retorno)  
-        if(data.sucesso)
-          this.departamentos = data.retorno;
-        else
-          this.errorMessage = data.error;
-      })
   }
 }
