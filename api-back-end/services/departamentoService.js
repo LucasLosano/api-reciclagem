@@ -1,4 +1,5 @@
 const departamentoDTO = require('../entities/DTOs/departamentoDTO');
+const departamentoModel = require('../entities/departamentoModel')
 const pesagemService = require('../services/pesagemService');
 
 var connection = process.env.AZURE_MONGODB;
@@ -46,14 +47,14 @@ async function addDepartamento(departamentoNovo){
     if (departamento !== null)
         throw {'status': 400,'mensagem':'Departamento já existe'};
 
-    await departamentos.insertOne(departamentoNovo);
+    await departamentos.insertOne(new departamentoModel(departamentoNovo));
     return await this.getDepartamentoById(departamentoNovo.id);
 }
 
 async function updateDepartamento(departamentoAtualizado){
     await this.getDepartamentoById(departamentoAtualizado.id);
     let departamentos = global.conn.collection("departamentos");  
-    await departamentos.updateOne({ id: departamentoAtualizado.id }, { $set: departamentoAtualizado });
+    await departamentos.updateOne({ id: departamentoAtualizado.id }, { $set: new departamentoModel(departamentoAtualizado) });
     return await this.getDepartamentoById(departamentoAtualizado.id);
 }
 

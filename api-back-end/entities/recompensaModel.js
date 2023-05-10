@@ -1,6 +1,6 @@
-const exception = require('../entities/DTOs/departamentoDTO');
+const exception = require('./DTOs/departamentoDTO');
 
-class recompensa {
+class recompensaModel {
     constructor(objeto) {
         if (typeof objeto !== 'object' ||
             typeof objeto.id !== 'number' ||
@@ -15,4 +15,4 @@ class recompensa {
     }
 }
 
-module.exports = recompensa;
+module.exports = recompensaModel;

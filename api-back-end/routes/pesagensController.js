@@ -12,7 +12,7 @@ router.get('/', function (req, res) {
         let status = erro.status !== undefined ? erro.status : 500;
         let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro.message;
 
-        res.status(status).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage }));
+        res.status(200).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage, status: status }));
     })
 });
 
@@ -25,7 +25,7 @@ router.get('/:id', function (req, res) {
         let status = erro.status !== undefined ? erro.status : 500;
         let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro.message;
 
-        res.status(status).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage }));
+        res.status(200).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage, status: status }));
     })
 });
 
@@ -36,7 +36,7 @@ router.post('/', function (req, res) {
     }).catch ( function (erro) {
         let status = erro.status !== undefined ? erro.status : 500;
         let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro.message;
-        res.status(status).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage }));
+        res.status(200).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage, status: status }));
     })
 });
 
