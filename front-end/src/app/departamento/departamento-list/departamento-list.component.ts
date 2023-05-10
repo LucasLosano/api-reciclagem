@@ -31,20 +31,22 @@ export class DepartamentoListComponent {
   delete(id: number){
     this.departamentoService.deleteById(id)
       .subscribe(data => {        
-        if(!data.sucesso)
-          this.errorMessage = data.error;
-        else
-          window.location.reload();      
+        this.errorMessage = data.error;      
+        if(data.sucesso)
+          window.location.reload();    
       })
   }
 
   ngOnInit() {
+    this.atualizarLista();   
+  }
+
+  atualizarLista(){
     this.departamentoService.getAll()
-      .subscribe(data => {        
+      .subscribe(data => {  
+        this.errorMessage = data.error;   
         if(data.sucesso)
           this.departamentos = data.retorno;
-        else
-          this.errorMessage = data.error;
       })
   }
 }

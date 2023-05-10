@@ -20,7 +20,6 @@ export class RecompensaService {
   }
 
   deleteById(id: number): Observable<any> {
-    console.log(this.baseURL + "/" + id);
     return this.http.delete(this.baseURL + "/" + id);
   }
 
