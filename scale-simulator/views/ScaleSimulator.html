@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador</title>
+    <link rel="stylesheet" type="text/css" rel="noopener" target="_blank" href="../styles/ScaleSimulator.css">
+</head>
+<body>
+    <div class="scaleForm">
+        <h1>Simulador de Balança</h1>
+        <form id="scaleForm">
+            <label class='labelStyle' for="identificador">Identificador:</label>
+            <input class="inputStyle" type="text" id="identificador" name="identificador" required><br>
+            <label class='labelStyle' for="peso">Peso(kg):</label>
+            <input class="inputStyle" type="number" id="peso" name="peso" step="0.01" required><br>
+            <label class='labelStyle'for="material">Material:</label>
+            <select class="inputStyle" id="material" name="material">
+                <option value="metal">Metal</option>
+                <option value="vidro">Vidro</option>
+                <option value="plastico">Plástico</option>
+                <option value="papel">Papel</option>
+            </select><br>
+    
+            <label class='labelStyle' for="departamento">Departamento:</label>
+            <input class="inputStyle" type="text" id="departamento" name="departamento" required><br>
+    
+            <label class='labelStyle' for="link">Link:</label>
+            <input class="inputStyle" type="url" id="link" name="link" required><br>
+            <input class="inputButton" onclick="validarFormulario()" type="submit" value="Enviar" />
+        </form>
+    </div>
+    <script src="../logic/ScaleSimulator.js"></script>
+</body>
+
+</html>

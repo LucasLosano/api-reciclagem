@@ -3,11 +3,13 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
+
 var expressJwt = require('express-jwt');
-var departamentos = require('./routes/departamentos');
-var pesagens = require ('./routes/pesagens');
-var recompensas = require('./routes/recompensas');
+var departamentos = require('./routes/departamentosController');
+var pesagens = require ('./routes/pesagensController');
+var recompensas = require('./routes/recompensasController');
 var usuarios = require('./routes/usuariosController');
+
 var app = express();
 
 app.use(bodyParser.json());

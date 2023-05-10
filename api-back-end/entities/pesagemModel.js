@@ -1,5 +1,5 @@
-const exception = require('../entities/DTOs/departamentoDTO');
-const material = require('../entities/material');
+const exception = require('./DTOs/departamentoDTO');
+const material = require('./materialModel');
 var moment = require('moment');
 
 class pesagem {
