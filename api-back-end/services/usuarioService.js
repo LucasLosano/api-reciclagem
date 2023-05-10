@@ -3,6 +3,7 @@ const autenticacaoDTO = require('../entities/DTOs/autenticacaoDTO');
 var connection = process.env.AZURE_MONGODB;
 var database = process.env.AZURE_DATABASE;
 
+const usuarioModel = require('../entities/usuarioModel');
 var bcrypt = require('bcryptjs');
 var lodash = require('lodash');
 const mongo = require('mongodb').MongoClient;
@@ -34,8 +35,10 @@ async function registrar(usuarioTentandoCadastrar) {
     if (auxUsuario !== null)
         throw {'status': 400,'mensagem':'Usuário já cadastrado.'};
 
-    var usuario = lodash.omit(usuarioTentandoCadastrar, "password");
-    usuario.hash = bcrypt.hashSync(usuarioTentandoCadastrar.password, 10);
+    var usuarioValido = new usuarioModel(usuarioTentandoCadastrar);
+
+    var usuario = lodash.omit(usuarioValido, "password");
+    usuario.hash = bcrypt.hashSync(usuarioValido.password, 10);
     
     await usuarios.insertOne(usuario);
 }
