@@ -28,8 +28,8 @@ jobs:
           npm run test --if-present
         env: 
           SECRET: ${{secrets.SECRET}},
-          AZURE_DATABASE: ${{AZURE_DATABASE}},
-          AZURE_MONGODB: ${{AZURE_MONGODB}}
+          AZURE_DATABASE: ${{secrets.AZURE_DATABASE}},
+          AZURE_MONGODB: ${{secrets.AZURE_MONGODB}}
       
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
