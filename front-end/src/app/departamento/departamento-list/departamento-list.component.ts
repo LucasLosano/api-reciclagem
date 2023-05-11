@@ -31,7 +31,7 @@ export class DepartamentoListComponent {
   delete(id: number){
     this.departamentoService.deleteById(id)
       .subscribe(data => {        
-        this.errorMessage = data.error;      
+        this.errorMessage = data.erro;      
         if(data.sucesso)
           window.location.reload();    
       })
@@ -44,7 +44,7 @@ export class DepartamentoListComponent {
   atualizarLista(){
     this.departamentoService.getAll()
       .subscribe(data => {  
-        this.errorMessage = data.error;   
+        this.errorMessage = data.erro;   
         if(data.sucesso)
           this.departamentos = data.retorno;
       })

@@ -31,7 +31,7 @@ export class RecompensaListComponent {
   delete(id: number){
     this.recompensaService.deleteById(id)
       .subscribe(data => {        
-        this.errorMessage = data.error;      
+        this.errorMessage = data.erro;      
         if(data.sucesso)
           window.location.reload();  
       })
@@ -44,7 +44,7 @@ export class RecompensaListComponent {
   atualizarLista(){
     this.recompensaService.getAll()
       .subscribe(data => {        
-        this.errorMessage = data.error;      
+        this.errorMessage = data.erro;      
         if(data.sucesso)
           this.recompensas = data.retorno; 
       })

@@ -1,0 +1,77 @@
+.d-flex {
+    display: flex;
+}
+
+.flex-grow-1 {
+    flex-grow: 1;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.barra-background, .barra-progresso {
+    border-radius: 8px;
+}
+
+.barra-background {
+    background: #ccc;
+    height: 10px;
+    width: 100%;
+}
+
+.barra-progresso {
+    background: green;
+    height: 20px;
+    margin-top: -15px;
+    transition: all .5s;
+    width: 44%;
+}
+
+.font-regular {
+    font-family: 'Roboto';
+    font-weight: 300;
+}
+
+.font-bold {
+    font-family: 'Roboto';
+    font-weight: 500;
+}
+
+.font-size-small {
+    font-family: 'Roboto';
+    font-size: .8em;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+
+.margin-bottom-1 {
+    margin-bottom: 16px;
+}
+
+.dot {
+    height: 20px;
+    width: 20px;
+    background-color: yellow;
+    border-radius: 50%;    
+    margin-top: -20px;
+    margin-left: -10px;
+}
+
+.dotnot{
+    height: 20px;
+    width: 20px;
+    background-color: gray;
+    border-radius: 50%;    
+    margin-top: -20px;
+    margin-left: -10px;
+}
+
+.title{
+    font-size: 16px;
+    font-weight: bold;
+    padding-bottom: 10px;
+}

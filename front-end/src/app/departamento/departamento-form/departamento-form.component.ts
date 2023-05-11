@@ -21,8 +21,8 @@ export class DepartamentoFormComponent {
 
   adicionar(){
     this.departamentoService.create(this.departamentoNovo!)
-    .subscribe(data => {        
-      this.errorMessage = data.error;      
+    .subscribe(data => {  
+      this.errorMessage = data.erro;      
       if(data.sucesso)
         window.location.reload();    
     });
@@ -30,7 +30,7 @@ export class DepartamentoFormComponent {
   alterar(){
     this.departamentoService.put(this.departamentoEdit!)
     .subscribe(data => {        
-      this.errorMessage = data.error;      
+      this.errorMessage = data.erro;      
       if(data.sucesso)
         window.location.reload();      
     });

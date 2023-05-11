@@ -15,7 +15,9 @@
       <label for="nome" class="placeholder">Pontos Necessários</label>
     </div>
     <input (click)="adicionar()" type="submit" class="add-button" value="Adicionar">
-    <span *ngIf="errorMessage !== '' ">{{errorMessage}}</span>
+    <div style="text-align: center;">
+      <span style="color: red; font-size: 12px;" *ngIf="errorMessage !== '' ">{{errorMessage}}</span>
+    </div>
 </div>
 
 <div *ngIf="recompensaEdit !== undefined" class="form">
@@ -35,5 +37,7 @@
         <label for="nome" class="placeholder">Pontos Necessários</label>
     </div>
     <input (click)="alterar()" type="submit" class="add-button" value="Alterar">
-    <span *ngIf="errorMessage !== '' ">{{errorMessage}}</span>
+    <div style="text-align: center;">
+      <span style="color: red; font-size: 12px;" *ngIf="errorMessage !== '' ">{{errorMessage}}</span>
+    </div>
 </div>

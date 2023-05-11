@@ -21,7 +21,7 @@ export class RecompensaFormComponent {
   adicionar(){
     this.recompensaService.create(this.recompensaNovo!)
     .subscribe(data => {        
-      this.errorMessage = data.error;      
+      this.errorMessage = data.erro;      
       if(data.sucesso)
         window.location.reload();  
     });
@@ -29,7 +29,7 @@ export class RecompensaFormComponent {
   alterar(){
     this.recompensaService.put(this.recompensaEdit!)
     .subscribe(data => {        
-      this.errorMessage = data.error;      
+      this.errorMessage = data.erro;      
       if(data.sucesso)
         window.location.reload();  
     });
