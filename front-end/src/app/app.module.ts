@@ -14,6 +14,7 @@ import { RecompensaFormComponent } from './recompensa/recompensa-form/recompensa
 import { LoginComponent } from './login/login.component';
 import { PrincipalComponent } from './principal/principal.component';
 import { AutenticationService as AuthenticationService } from './services/autentication/authentication.service';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AutenticationService as AuthenticationService } from './services/autent
     RecompensaListComponent,
     RecompensaFormComponent,
     LoginComponent,
-    PrincipalComponent
+    PrincipalComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

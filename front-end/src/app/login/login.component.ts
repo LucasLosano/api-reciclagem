@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { UsuarioModel } from '../models/usuarioModel';
 import { UsuarioService } from '../services/usuario.service';
 import { Router } from '@angular/router';
+import { Observable, count, delay, timer } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -11,6 +12,7 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   usuario: UsuarioModel = {} as UsuarioModel;
   errorMessage: string = "";
+  message: string = "";
 
   constructor(
     private usuarioService: UsuarioService,
@@ -19,7 +21,7 @@ export class LoginComponent {
   }
   logar(){
     this.usuarioService.getUser(this.usuario)
-    .subscribe(data => {        
+    .subscribe(data => {    
       this.errorMessage = data.error;      
       if(data.sucesso){
         sessionStorage.setItem('token', data.retorno.token)   
@@ -28,12 +30,26 @@ export class LoginComponent {
     });
   }
 
-  criarUsuario(){
-    this.usuarioService.createUser(this.usuario)
-    .subscribe(data => {        
-      this.errorMessage = data.error;      
-      if(data.sucesso)
-        this.logar(); 
-    });
+  criarUsuario(){        
+    var action = async () => {
+      await this.usuarioService.createUser(this.usuario)
+      .subscribe(data => {   
+        this.errorMessage = data.erro;     
+        if(data.sucesso)
+          this.logar(); 
+      });
+    }
+    this.retryFunction(action);
+  }
+
+  async retryFunction(action: () => Promise<void>){    
+    let count = 0;
+    let retry = true;
+    do {
+      await action();
+      count++;
+      retry = count < 3 && this.errorMessage !== "";
+      await  setTimeout(()=>{}, 5000)
+    }while (retry); 
   }
 }
