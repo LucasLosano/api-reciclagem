@@ -47,6 +47,7 @@ async function enviarFormulario(peso, material, departamento, link, identificado
 }
 
 function clearFields(params) {
+    
     document.getElementById('peso').value = "";
     document.getElementById('departamento').value = "";
     document.getElementById('link').value = "";
