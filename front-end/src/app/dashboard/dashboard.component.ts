@@ -35,7 +35,7 @@ export class DashboardComponent {
           this.departamentos = data.retorno;
           this.departamentosDashboard = this.departamentos
           .map(departamento => new DashboardModel(departamento))
-          .sort(departamento => departamento.pontuacao);
+          .sort(departamento => departamento.pontuacao).reverse();
         }
       })
   }
