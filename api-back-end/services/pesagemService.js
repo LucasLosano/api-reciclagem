@@ -1,4 +1,4 @@
-const pesagem = require('../entities/pesagem');
+const pesagemModel = require('../entities/pesagemModel');
 const pesagemDTO = require('../entities/DTOs/pesagemDTO');
 
 var connection = process.env.AZURE_MONGODB;
@@ -25,7 +25,7 @@ async function addPesagem(pesagemNova) {
     if (auxPesagem !== null)
         throw { 'status': 400, 'mensagem': 'Um pesagem com esse Id já foi criado' };
 
-    await pesagens.insertOne(pesagemNova);
+    await pesagens.insertOne(new pesagemModel(pesagemNova));
     return this.getPesagemById(pesagemNova.id);
 }
 

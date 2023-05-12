@@ -1,69 +1,69 @@
 var express = require('express');
 var router = express.Router();
 
-var departamentoService = require('../services/departamentoService');
+const recompensaService = require('../services/recompensaService');
 const retornoAPI = require('../entities/retornoAPI');
 
 router.get('/', function (req, res) {
-  departamentoService.getDepartamentos()
-    .then(function (departamentos) {
-      res.send(new retornoAPI({ sucesso: true, retorno: departamentos, erro: '' }));
+  recompensaService.getRecompensa()
+    .then(function (recompensas) {
+      res.send(new retornoAPI({ sucesso: true, retorno: recompensas, erro: '' }));
     })
     .catch(function (erro) {
       let status = erro.status !== undefined ? erro.status : 500;
       let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro.message;
-      res.status(status).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage }));
+      res.status(200).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage, status: status }));
     });
 });
 
+
 router.get('/:id', function (req, res) {
   let id = parseInt(req.params.id);
-
-  departamentoService.getDepartamentoById(id)
-    .then(function (departamento) {
-      res.send(new retornoAPI({ sucesso: true, retorno: departamento, erro: '' }));
+  recompensaService.getRecompensaById(id)
+    .then(function (recompensa) {
+      res.send(new retornoAPI({ sucesso: true, retorno: recompensa, erro: '' }));
     })
     .catch(function (erro) {
       let status = erro.status !== undefined ? erro.status : 500;
       let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro.message;
-      res.status(status).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage }));
+      res.status(200).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage, status: status }));
     });
 });
 
 router.post('/', function (req, res) {
-  departamentoService.addDepartamento(req.body)
-    .then(function (departamento) {
-      res.status(201).json(new retornoAPI({ sucesso: true, retorno: departamento, erro: '' }));
+  recompensaService.addRecompensa(req.body)
+    .then(function (recompensa) {
+      res.status(201).json(new retornoAPI({ sucesso: true, retorno: recompensa, erro: '' }));
     })
     .catch(function (erro) {
       let status = erro.status !== undefined ? erro.status : 500;
       let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro.message;
-      res.status(status).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage }));
+      res.status(200).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage, status: status }));
     });
 });
 
 router.put('/', function (req, res) {
-  departamentoService.updateDepartamento(req.body)
+  recompensaService.updateRecompensa(req.body)
     .then(function (departamento) {
       res.send(new retornoAPI({ sucesso: true, retorno: departamento, erro: '' }));
     })
     .catch(function (erro) {
       let status = erro.status !== undefined ? erro.status : 500;
       let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro.message;
-      res.status(status).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage }));
+      res.status(200).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage, status: status }));
     });
 });
 
 router.delete('/:id', function (req, res) {  
   let id = parseInt(req.params.id);
-  departamentoService.deleteDepartamento(id)
+  recompensaService.deleteRecompensa(id)
     .then(function (departamento) {
       res.send(new retornoAPI({ sucesso: true, retorno: departamento, erro: '' }));
     })
     .catch(function (erro) {
       let status = erro.status !== undefined ? erro.status : 500;
       let errorMessage = erro.mensagem !== undefined ? erro.mensagem : erro.message;
-      res.status(status).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage }));
+      res.status(200).json(new retornoAPI({ sucesso: false, retorno: null, erro: errorMessage, status: status }));
     });
 });
 

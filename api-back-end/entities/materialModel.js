@@ -1,4 +1,4 @@
-class material{
+class materialModel{
     static materialTipo = new Map([
     [0, 'Plastico'],
     [1, 'Papel'],
@@ -18,4 +18,4 @@ class material{
     }
 }
 
-module.exports = material;
+module.exports = materialModel;

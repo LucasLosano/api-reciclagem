@@ -1,4 +1,4 @@
-class departamento {
+class departamentoModel {
     constructor(objeto) {
         if (typeof objeto !== 'object' ||
             typeof objeto.id !== 'number' ||
@@ -14,4 +14,4 @@ class departamento {
     }
 }
 
-module.exports = departamento;
+module.exports = departamentoModel;

@@ -1,0 +1,74 @@
+body{
+    background-color: #e6f1e2;
+}
+.scaleForm{
+    max-width: 600px;
+    margin: 10px auto;
+    padding: 16px;
+    background: #fff;
+    border: 2px solid black;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+}
+.scaleForm h1{
+    background: rgb(1, 112, 1);
+    padding: 20px 0;
+    font-size: 140%;
+    font-weight: 300;
+    text-align: center;
+    color: #fff;
+    margin: -16px -16px 16px -16px;
+    border-top-left-radius: 10px;
+    font-weight: bold
+}
+.labelStyle {
+    font-size: 120%;
+    font-weight: bold
+}
+.inputStyle
+{
+    outline: none;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    width: 100%;
+    background: #fff;
+    margin-bottom: 4%;
+    border: 2px solid black;
+    padding: 3%;
+    color: black;
+    background-color: #ddffd1;
+    font-size: 140%;
+    border-radius: 10px;
+}
+
+
+.inputButton {
+    width: 100%;
+    padding: 3%;
+    background: rgb(1, 112, 1);
+    color:  #fff;
+    text-align: center;
+    border-top-style: none;
+    border-right-style: none;
+    border-left-style: none;
+    border-bottom-style: none;	
+    border: 2px solid black;
+    font-size: 120%;
+    font-weight: 300;
+    border-radius: 10px;
+    font-weight: bold
+}
+
+html { font-size: 16px; }
+
+@media (max-width: 550px) {
+    html { font-size: 12px; }
+}
+
+@media (min-width: 551px) {
+    html { font-size: 16px; }
+}
