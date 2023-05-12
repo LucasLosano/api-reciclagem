@@ -34,8 +34,7 @@ export class DashboardComponent {
         if(data.sucesso){
           this.departamentos = data.retorno;
           this.departamentosDashboard = this.departamentos
-          .map(departamento => new DashboardModel(departamento))
-          .sort(departamento => departamento.pontuacao);
+          .map(departamento => new DashboardModel(departamento)));
         }
       })
   }
