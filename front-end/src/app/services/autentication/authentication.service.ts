@@ -6,7 +6,6 @@ export class AutenticationService implements HttpInterceptor {
   constructor() {} 
  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {  
     const token = sessionStorage.getItem("token");
-    console.log("Token aqui bem " + token)
     if (token) {
       request = request.clone({
       setHeaders: {Authorization: `Bearer ${token}`}
