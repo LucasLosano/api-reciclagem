@@ -11,13 +11,11 @@ import { DashboardModel } from '../models/dashboardModel';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
-  @Input() label1: string = 'Label 1';
-  @Input() label2: string = 'Label 2';
-  @Input() progresso: number = 50;
   departamentos: DepartamentoModel[] = [];
   recompensas: RecompensaModel[] = [];
   departamentosDashboard: DashboardModel[] = [];
   contador: number = 1;
+  pontuacaoMaxima: number = 1;
 
   constructor(
     private departamentoService: DepartamentoService,
@@ -43,8 +41,10 @@ export class DashboardComponent {
   getRecompensas(){
     this.recompensaService.getAll()
       .subscribe(data => {  
-        if(data.sucesso)
+        if(data.sucesso){
           this.recompensas = data.retorno;
+          this.pontuacaoMaxima = Math.max(...this.recompensas.map(recompensa => recompensa.pontosNecessarios))
+        }
       })
   }
 }
