@@ -1,18 +1,17 @@
 <div style="text-align: center; margin: 0 auto;">
     <h1>Ranking</h1>
 </div>
-
 <div *ngFor="let departamento of departamentosDashboard; let i = index;" class="d-flex flex-column margin-bottom-1">
-    <span class="title">{{i + 1}}° - {{departamento.nome | titlecase }}</span>
+    <span class="title">{{i + 1}}° - {{departamento.nome | titlecase }} - Pontuação: {{departamento.pontuacao}}</span>
     <div>
         <div class="barra-background"></div>
         <div class="barra-progresso"
-            [style.width.%]="departamento.pontuacao"
+            [style.width.%]="departamento.pontuacao/ pontuacaoMaxima * 100"
         ></div>
         <div *ngFor="let recompensa of recompensas" 
         [ngClass]="recompensa.pontosNecessarios >= departamento.pontuacao ? 'dotnot' : 'dot'"
-        [ngStyle]="{'margin-left': 'calc( ' + recompensa.pontosNecessarios +'% - 10px)' }"  
-        title="{{recompensa.nome}}"
+        [ngStyle]="{'margin-left': 'calc( ' + recompensa.pontosNecessarios / pontuacaoMaxima * 100 +'% - 10px)' }"  
+        title="{{recompensa.nome}} - {{recompensa.pontosNecessarios}}"
         class="dot"></div>
     </div>
 </div>
