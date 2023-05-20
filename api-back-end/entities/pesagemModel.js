@@ -14,7 +14,7 @@ class pesagem {
 
         this.id = objeto.id;
         this.peso = objeto.peso;
-        this.tipoMaterial = material.getTipoById(objeto.tipoMaterial);
+        this.tipoMaterial = objeto.tipoMaterial;
         this.departamentoId = objeto.departamentoId;
         this.dataHora = moment().format('DD-MM-yyyy:hh:mm:ss');
     }
