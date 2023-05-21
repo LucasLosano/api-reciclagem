@@ -44,8 +44,8 @@ router.post('/', function (req, res) {
 
 router.put('/', function (req, res) {
   materialService.updateMaterial(req.body)
-    .then(function (departamento) {
-      res.send(new retornoAPI({ sucesso: true, retorno: departamento, erro: '' }));
+    .then(function (material) {
+      res.send(new retornoAPI({ sucesso: true, retorno: material, erro: '' }));
     })
     .catch(function (erro) {
       let status = erro.status !== undefined ? erro.status : 500;
@@ -57,8 +57,8 @@ router.put('/', function (req, res) {
 router.delete('/:id', function (req, res) {  
   let id = parseInt(req.params.id);
   materialService.deleteMaterial(id)
-    .then(function (departamento) {
-      res.send(new retornoAPI({ sucesso: true, retorno: departamento, erro: '' }));
+    .then(function (material) {
+      res.send(new retornoAPI({ sucesso: true, retorno: material, erro: '' }));
     })
     .catch(function (erro) {
       let status = erro.status !== undefined ? erro.status : 500;
