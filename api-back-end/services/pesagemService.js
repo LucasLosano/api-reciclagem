@@ -23,7 +23,7 @@ async function addPesagem(pesagemNova) {
     let pesagens = global.conn.collection("pesagens");
     let auxPesagem = await pesagens.findOne({id : pesagemNova.id});
     if (auxPesagem !== null)
-        throw { 'status': 400, 'mensagem': 'Um pesagem com esse Id já foi criado' };
+        throw { 'status': 400, 'mensagem': 'Uma pesagem com esse Id já foi criado' };
 
     await pesagens.insertOne(new pesagemModel(pesagemNova));
     return this.getPesagemById(pesagemNova.id);
