@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
         mode: 'cors',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization' : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDY5MGU4N2NjYTY1N2U2YmVlZDdlYWQiLCJpYXQiOjE2ODQ2OTQwNDF9.zN8hxa8bleteLdpyVFJql7kjmrhQtAp2TrXIwEbaIHA'
         },
     }).then(response => response.json())
     .then(data => {
