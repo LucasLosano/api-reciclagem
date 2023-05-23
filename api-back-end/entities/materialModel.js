@@ -1,20 +1,14 @@
 class materialModel{
-    static materialTipo = new Map([
-    [0, 'Plastico'],
-    [1, 'Papel'],
-    [2, 'Vidro'],
-    [3, 'Organico'],
-    [4, 'Metal'],
-    [5, 'NaoReciclavel']]);
-
-    static getTipoById(id) {
-        return this.materialTipo.get(parseInt(id));
-    }
-    static getByValue(material) {
-        for (let [key, value] of this.materialTipo.entries()) {
-            if (value === material)
-            return key;
+    constructor(objeto) {
+        if (typeof objeto !== 'object' ||
+            typeof objeto.pontuacaoPorKg !== 'number' ||
+            typeof objeto.id !== 'number' ||
+            typeof objeto.nomeMaterial !== 'string') {
+            throw {'status': 400,'mensagem':'Parâmetros inválidos'};
         }
+        this.id = objeto.id;
+        this.pontuacaoPorKg = objeto.pontuacaoPorKg;
+        this.nomeMaterial = objeto.nomeMaterial;
     }
 }
 

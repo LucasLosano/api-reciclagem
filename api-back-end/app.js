@@ -8,6 +8,7 @@ var departamentos = require('./routes/departamentosController');
 var pesagens = require ('./routes/pesagensController');
 var recompensas = require('./routes/recompensasController');
 var usuarios = require('./routes/usuariosController');
+var materiais = require('./routes/materiaisController');
 
 var app = express();
 
@@ -23,5 +24,6 @@ app.use('/api/v1/departamentos', departamentos);
 app.use('/api/v1/pesagens', pesagens);
 app.use('/api/v1/recompensas', recompensas);
 app.use('/api/v1/usuarios', usuarios);
+app.use('/api/v1/materiais', materiais);
 
 module.exports = app;
