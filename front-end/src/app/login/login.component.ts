@@ -19,37 +19,43 @@ export class LoginComponent {
     private router: Router
   ) {
   }
-  logar(){
+  logar() {
     this.usuarioService.getUser(this.usuario)
-    .subscribe(data => {    
-      this.errorMessage = data.error;      
-      if(data.sucesso){
-        sessionStorage.setItem('token', data.retorno.token)   
-        this.router.navigate(['']);
-      }
-    });
-  }
-
-  criarUsuario(){        
-    var action = async () => {
-      await this.usuarioService.createUser(this.usuario)
-      .subscribe(data => {   
-        this.errorMessage = data.erro;     
-        if(data.sucesso)
-          this.logar(); 
+      .subscribe(data => {
+        this.errorMessage = data.error;
+        if (data.sucesso) {
+          sessionStorage.setItem('token', data.retorno.token)
+          this.router.navigate(['']);
+        }
       });
-    }
-    this.retryFunction(action);
   }
 
-  async retryFunction(action: () => Promise<void>){    
+  criarUsuario() {
+    console.log(this.usuario.password);
+    console.log(this.usuario.username);
+    if (this.usuario.password == '' || this.usuario.password == undefined || this.usuario.username == '' || this.usuario.username == undefined) {
+      this.errorMessage = 'Para se cadastrar, preencha o usuário e a senha, clique novamente em Cadastrar';
+    } else {
+      var action = async () => {
+        await this.usuarioService.createUser(this.usuario)
+          .subscribe(data => {
+            this.errorMessage = data.erro;
+            if (data.sucesso)
+              this.logar();
+          });
+      }
+      this.retryFunction(action);
+    }
+  }
+
+  async retryFunction(action: () => Promise<void>) {
     let count = 0;
     let retry = true;
     do {
       await action();
       count++;
       retry = count < 3 && this.errorMessage !== "";
-      await  setTimeout(()=>{}, 5000)
-    }while (retry); 
+      await setTimeout(() => { }, 5000)
+    } while (retry);
   }
 }
