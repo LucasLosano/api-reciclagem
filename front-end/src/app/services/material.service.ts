@@ -1,23 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { DepartamentoModel } from '../models/departamentoModel';
+import { MaterialModel } from '../models/materialModel';
 
 @Injectable({
   providedIn: 'root'
 })
-
-export class DepartamentoService {
-
+export class MaterialService {
   constructor(private http: HttpClient) { }
 
-  private baseURL = `http://localhost:3000/api/v1/departamentos`;
+  private baseURL = `http://localhost:3000/api/v1/materiais`;
 
   getAll(): Observable<any> {
     return this.http.get(this.baseURL);
   }
 
-  create(data: DepartamentoModel): Observable<any> {
+  create(data: MaterialModel): Observable<any> {
     return this.http.post(this.baseURL, data);
   }
 
@@ -25,7 +23,8 @@ export class DepartamentoService {
     return this.http.delete(this.baseURL + "/" + id);
   }
 
-  put(data: DepartamentoModel): Observable<any> {    
+  put(data: MaterialModel): Observable<any> {
     return this.http.put(this.baseURL, data);
   }
+  
 }

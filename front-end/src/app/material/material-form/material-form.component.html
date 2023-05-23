@@ -1,0 +1,43 @@
+<div *ngIf="materialEdit === undefined" class="form">
+    <div class="input-container">
+      <input [(ngModel)]="materialNovo!.id" id="id" class="input" type="number" placeholder=" " />
+      <div class="cut"></div>
+      <label for="id" class="placeholder">Id</label>
+    </div>
+    <div class="input-container">
+      <input [(ngModel)]="materialNovo!.nomeMaterial" id="nome" class="input" type="text" placeholder=" " />
+      <div class="cut"></div>
+      <label for="nome" class="placeholder">Nome do Material</label>
+    </div>
+    <div class="input-container">
+      <input [(ngModel)]="materialNovo!.pontuacaoPorKg" id="pontosNecessarios" class="input" type="number" placeholder=" " />
+      <div class="cut"></div>
+      <label for="nome" class="placeholder">Pontuação por kg</label>
+    </div>
+    <input (click)="adicionar()" type="submit" class="add-button" value="Adicionar">
+    <div style="text-align: center;">
+      <span style="color: red; font-size: 12px;" *ngIf="errorMessage !== '' ">{{errorMessage}}</span>
+    </div>
+</div>
+
+<div *ngIf="materialEdit !== undefined" class="form">
+    <div class="input-container">
+      <input [(ngModel)]="materialEdit.id" id="id" class="input" type="number" readonly placeholder=" " />
+      <div class="cut"></div>
+      <label for="id" class="placeholder">Id</label>
+    </div>
+    <div class="input-container">
+      <input [(ngModel)]="materialEdit.nomeMaterial" id="nome" class="input" type="text" placeholder=" " />
+      <div class="cut"></div>
+      <label for="nome" class="placeholder">Nome do Material</label>
+    </div>
+    <div class="input-container">
+        <input [(ngModel)]="materialEdit!.pontuacaoPorKg" id="pontosNecessarios" class="input" type="number" placeholder=" " />
+        <div class="cut"></div>
+        <label for="nome" class="placeholder">Pontuação por kg</label>
+    </div>
+    <input (click)="alterar()" type="submit" class="add-button" value="Alterar">
+    <div style="text-align: center;">
+      <span style="color: red; font-size: 12px;" *ngIf="errorMessage !== '' ">{{errorMessage}}</span>
+    </div>
+</div>

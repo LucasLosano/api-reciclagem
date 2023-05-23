@@ -17,28 +17,51 @@ function validarFormulario() {
     }
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+    const response = fetch('http://localhost:3000/api/v1/materiais', {
+        method: 'GET',
+        mode: 'cors',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    }).then(response => response.json())
+    .then(data => {
+      const selectElement = document.getElementById('material'); // Substitua 'seu-select' pelo ID correto do seu elemento <select>
+      data.retorno.forEach(opcao => {
+        const optionElement = document.createElement('option');
+        console.log( opcao.nomeMaterial);
+        console.log( opcao.valor);
+        optionElement.label = opcao.nomeMaterial;
+        optionElement.value = opcao.id;
+        selectElement.appendChild(optionElement);
+      });
+    })
+    .catch(error => {
+      console.error('Erro ao obter as opções:', error);
+    });
+  });
+
 async function enviarFormulario(peso, material, departamento, link, identificador) {
     console.log(peso);
     console.log(material);
     console.log(departamento);
     console.log(link);
     const data = JSON.stringify({
-        departamento: departamento,
-        peso: peso,
-        nome: material,
-        id: identificador
+        departamentoId:  Number(departamento),
+        peso:  Number(peso),
+        materialId : Number(material),
+        id: Number(identificador)
     });
     const response = await fetch(link, {
         method: 'POST',
         mode: 'cors',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
         },
         body: data
     });
-
     if (response.ok) {
-        alert('Pedido enviado com sucesso!');
+        alert('Pesagem enviada com sucesso!');
         console.log(await response.text());
         clearFields();
     } else {
