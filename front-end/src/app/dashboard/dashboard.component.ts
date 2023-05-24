@@ -45,7 +45,7 @@ export class DashboardComponent {
     
     this.departamentoService.getAll()
       .subscribe(data => {  
-        if(data.sucesso){
+        if(data.sucesso){       
           this.departamentos = data.retorno;
           this.departamentosDashboard = this.departamentos
           .map(departamento => new DashboardModel(departamento, mapMaterialToPoints))

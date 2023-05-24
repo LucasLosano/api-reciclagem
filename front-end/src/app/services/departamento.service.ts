@@ -11,7 +11,7 @@ export class DepartamentoService {
 
   constructor(private http: HttpClient) { }
 
-  private baseURL = `http://localhost:3000/api/v1/departamentos`;
+  private baseURL = `https://ecogestor-dev.azurewebsites.net/api/v1/departamentos`;
 
   getAll(): Observable<any> {
     return this.http.get(this.baseURL);
