@@ -31,8 +31,6 @@ export class LoginComponent {
   }
 
   criarUsuario() {
-    console.log(this.usuario.password);
-    console.log(this.usuario.username);
     if (this.usuario.password == '' || this.usuario.password == undefined || this.usuario.username == '' || this.usuario.username == undefined) {
       this.errorMessage = 'Para se cadastrar, preencha o usuário e a senha, clique novamente em Cadastrar';
     } else {

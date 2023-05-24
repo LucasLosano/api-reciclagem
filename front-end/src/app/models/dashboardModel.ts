@@ -8,8 +8,6 @@ export class DashboardModel{
         this.nome = departamentoModel.nome;
         departamentoModel.pesagens.forEach(pesagem => { 
             const materialId = pesagem.materialId;
-            console.log(materialId);
-            console.log(materiaisMap.get(materialId));
             const quantidade = materiaisMap.get(materialId) || 0;
             this.pontuacao += pesagem.peso * quantidade;
         });
