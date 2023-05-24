@@ -8,61 +8,58 @@ function validarFormulario() {
     if (!peso || !material || !departamento || !link || !identificador) {
         alert('Por favor, preencha todos os campos obrigatórios!');
     } else {
-        console.log(peso);
-        console.log(material);
-        console.log(departamento);
-        console.log(link);
-
         enviarFormulario(peso, material, departamento, link, identificador);
     }
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    const response = fetch('http://localhost:3000/api/v1/materiais', {
-        method: 'GET',
-        mode: 'cors',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    }).then(response => response.json())
-    .then(data => {
-      const selectElement = document.getElementById('material'); // Substitua 'seu-select' pelo ID correto do seu elemento <select>
-      data.retorno.forEach(opcao => {
-        const optionElement = document.createElement('option');
-        console.log( opcao.nomeMaterial);
-        console.log( opcao.valor);
-        optionElement.label = opcao.nomeMaterial;
-        optionElement.value = opcao.id;
-        selectElement.appendChild(optionElement);
-      });
-    })
-    .catch(error => {
-      console.error('Erro ao obter as opções:', error);
-    });
-  });
-
+    var token = sessionStorage.getItem('token');
+    if(token) {
+        const response = fetch('https://ecogestor-dev.azurewebsites.net/api/v1/materiais', {
+            method: 'GET',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization' : 'Bearer ' + token
+            },
+        }).then(response => response.json())
+        .then(data => {
+          const selectElement = document.getElementById('material'); // Substitua 'seu-select' pelo ID correto do seu elemento <select>
+          data.retorno.forEach(opcao => {
+            const optionElement = document.createElement('option');
+            optionElement.label = opcao.nomeMaterial;
+            optionElement.value = opcao.id;
+            selectElement.appendChild(optionElement);
+          });
+        })
+        .catch(error => {
+          console.error('Erro ao obter as opções:', error);
+        });
+    } else {
+        window.location.assign("ScaleLogin.html");
+    }
+});
+    
 async function enviarFormulario(peso, material, departamento, link, identificador) {
-    console.log(peso);
-    console.log(material);
-    console.log(departamento);
-    console.log(link);
     const data = JSON.stringify({
         departamentoId:  Number(departamento),
         peso:  Number(peso),
         materialId : Number(material),
         id: Number(identificador)
     });
+    var token = sessionStorage.getItem('token');
+
     const response = await fetch(link, {
         method: 'POST',
         mode: 'cors',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization' : 'Bearer ' + token
         },
         body: data
     });
     if (response.ok) {
         alert('Pesagem enviada com sucesso!');
-        console.log(await response.text());
         clearFields();
     } else {
         alert('Houve um erro ao enviar o pedido.');

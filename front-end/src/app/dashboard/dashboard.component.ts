@@ -36,10 +36,8 @@ export class DashboardComponent {
     this.materialService.getAll()
     .subscribe(data => {  
       if(data.sucesso){
-        console.log(data.retorno);
         this.materiais = data.retorno;
         this.materiais.forEach(opcao => {
-          console.log(opcao);
           mapMaterialToPoints.set( opcao.id, opcao.pontuacaoPorKg );
         })
       }
@@ -47,10 +45,7 @@ export class DashboardComponent {
     
     this.departamentoService.getAll()
       .subscribe(data => {  
-      console.log(mapMaterialToPoints);
         if(data.sucesso){
-          console.log(data.retorno);
-          
           this.departamentos = data.retorno;
           this.departamentosDashboard = this.departamentos
           .map(departamento => new DashboardModel(departamento, mapMaterialToPoints))
