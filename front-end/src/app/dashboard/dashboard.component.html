@@ -2,11 +2,11 @@
     <h1>Ranking</h1>
 </div>
 <div *ngFor="let departamento of departamentosDashboard; let i = index;" class="d-flex flex-column margin-bottom-1">
-    <span class="title">{{i + 1}}° - {{departamento.nome | titlecase }} - Pontuação: {{departamento.pontuacao}}</span>
+    <span class="title">{{i + 1}}° - {{departamento.nome | titlecase }} - Pontuação: {{departamento.pontuacao | number: '1.0-2'}}</span>
     <div>
         <div class="barra-background"></div>
         <div class="barra-progresso"
-            [style.width.%]="departamento.pontuacao/ pontuacaoMaxima * 100"
+            [style.width.%]="departamento.pontuacao < pontuacaoMaxima ? departamento.pontuacao/ pontuacaoMaxima * 100 : 100"
         ></div>
         <div *ngFor="let recompensa of recompensas" 
         [ngClass]="recompensa.pontosNecessarios >= departamento.pontuacao ? 'dotnot' : 'dot'"
