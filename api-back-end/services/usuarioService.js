@@ -7,7 +7,7 @@ const usuarioModel = require('../entities/usuarioModel');
 var bcrypt = require('bcryptjs');
 var lodash = require('lodash');
 const mongo = require('mongodb').MongoClient;
-mongo.connect(connection, { useUnifiedTopology: true })
+await mongo.connect(connection, { useUnifiedTopology: true })
     .then(conn => global.conn = conn.db(database))
     .catch(err => console.log(err));
 
@@ -18,7 +18,7 @@ service.registrar = registrar;
 module.exports = service;
 
 async function autenticar(usuarioTentandoLogar) {     
-    let usuarios = global.conn.collection("usuarios");
+    let usuarios = await global.conn.collection("usuarios");
     let auxUsuario = await usuarios.findOne({username : usuarioTentandoLogar.username});
 
     if (auxUsuario !== null && usuarios && bcrypt.compareSync(usuarioTentandoLogar.password, auxUsuario.hash)) {
@@ -29,7 +29,7 @@ async function autenticar(usuarioTentandoLogar) {
 }
 
 async function registrar(usuarioTentandoCadastrar) {
-    let usuarios = global.conn.collection("usuarios");
+    let usuarios = await global.conn.collection("usuarios");
     let auxUsuario = await usuarios.findOne({username : usuarioTentandoCadastrar.username});
 
     if (auxUsuario !== null)

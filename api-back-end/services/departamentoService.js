@@ -5,7 +5,7 @@ const pesagemService = require('../services/pesagemService');
 var connection = process.env.AZURE_MONGODB;
 var database = process.env.AZURE_DATABASE;
 const mongo = require('mongodb').MongoClient;
-mongo.connect(connection, { useUnifiedTopology: true })
+await mongo.connect(connection, { useUnifiedTopology: true })
     .then(conn => global.conn = conn.db(database))
     .catch(err => console.log(err));
 
@@ -20,7 +20,7 @@ service.deleteDepartamento = deleteDepartamento;
 module.exports = service;
 
 async function getDepartamentos(){
-    var departamentos = global.conn.collection("departamentos");
+    var departamentos = await global.conn.collection("departamentos");
     const result = await departamentos.find().toArray();
     return await Promise.all(result.map(
         async (departamento) => {
@@ -31,7 +31,7 @@ async function getDepartamentos(){
 }
 
 async function getDepartamentoById(departamentoId){
-    var departamentos = global.conn.collection("departamentos");
+    var departamentos = await global.conn.collection("departamentos");
     var departamento = await departamentos.findOne({ id: departamentoId });
 
     if (departamento === null)
@@ -42,7 +42,7 @@ async function getDepartamentoById(departamentoId){
 }
 
 async function addDepartamento(departamentoNovo){
-    var departamentos = global.conn.collection("departamentos");
+    var departamentos = await global.conn.collection("departamentos");
     var departamento = await departamentos.findOne({ id: departamentoNovo.id });
     if (departamento !== null)
         throw {'status': 400,'mensagem':'Departamento já existe'};
@@ -53,14 +53,14 @@ async function addDepartamento(departamentoNovo){
 
 async function updateDepartamento(departamentoAtualizado){
     await this.getDepartamentoById(departamentoAtualizado.id);
-    let departamentos = global.conn.collection("departamentos");  
+    let departamentos = await global.conn.collection("departamentos");  
     await departamentos.updateOne({ id: departamentoAtualizado.id }, { $set: new departamentoModel(departamentoAtualizado) });
     return await this.getDepartamentoById(departamentoAtualizado.id);
 }
 
 async function deleteDepartamento(id){
     await this.getDepartamentoById(id);
-    let departamentos = global.conn.collection("departamentos");  
+    let departamentos = await global.conn.collection("departamentos");  
     await departamentos.deleteOne({ id });
     return await this.getDepartamentos();
 }
