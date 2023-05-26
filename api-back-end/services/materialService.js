@@ -4,7 +4,7 @@ const materialModel = require('../entities/materialModel')
 var connection = process.env.AZURE_MONGODB;
 var database = process.env.AZURE_DATABASE;
 const mongo = require('mongodb').MongoClient;
-mongo.connect(connection, { useUnifiedTopology: true })
+await mongo.connect(connection, { useUnifiedTopology: true })
     .then(conn => global.conn = conn.db(database))
     .catch(err => console.log(err));
 
@@ -19,13 +19,13 @@ service.deleteMaterial = deleteMaterial;
 module.exports = service;
 
 async function getMaterials(){
-    var Materials = global.conn.collection("Materiais");
+    var Materials = await global.conn.collection("Materiais");
     const result = await Materials.find().toArray();
     return Array.from(result).map(material => new materialDTO(material));
 }
 
 async function getMaterialById(MaterialId){
-    var materials = global.conn.collection("Materiais");
+    var materials = await global.conn.collection("Materiais");
     var material = await materials.findOne({ id: MaterialId });
 
     if (material === null)
@@ -35,7 +35,7 @@ async function getMaterialById(MaterialId){
 }
 
 async function addMaterial(MaterialNovo){
-    var materials = global.conn.collection("Materiais");
+    var materials = await global.conn.collection("Materiais");
     var material = await materials.findOne({ id: MaterialNovo.id });
     if (material !== null)
         throw {'status': 400,'mensagem':'Material já existe'};
@@ -46,14 +46,14 @@ async function addMaterial(MaterialNovo){
 
 async function updateMaterial(materialAtualizado){
     await this.getMaterialById(materialAtualizado.id);
-    let materials = global.conn.collection("Materiais");  
+    let materials = await global.conn.collection("Materiais");  
     await materials.updateOne({ id: materialAtualizado.id }, { $set: new materialModel(materialAtualizado) });
     return await this.getMaterialById(materialAtualizado.id);
 }
 
 async function deleteMaterial(id){
     await this.getMaterialById(id);
-    let materials = global.conn.collection("Materiais");  
+    let materials = await global.conn.collection("Materiais");  
     await materials.deleteOne({ id });
     return await this.getMaterials();
 }
