@@ -34,26 +34,12 @@ export class LoginComponent {
     if (this.usuario.password == '' || this.usuario.password == undefined || this.usuario.username == '' || this.usuario.username == undefined) {
       this.errorMessage = 'Para se cadastrar, preencha o usuário e a senha, clique novamente em Cadastrar';
     } else {
-      var action = async () => {
-        await this.usuarioService.createUser(this.usuario)
-          .subscribe(data => {
-            this.errorMessage = data.erro;
-            if (data.sucesso)
-              this.logar();
-          });
-      }
-      this.retryFunction(action);
+      this.usuarioService.createUser(this.usuario)
+      .subscribe(data => {
+        this.errorMessage = data.erro;
+        if (data.sucesso)
+          this.logar();
+      });
     }
-  }
-
-  async retryFunction(action: () => Promise<void>) {
-    let count = 0;
-    let retry = true;
-    do {
-      await action();
-      count++;
-      retry = count < 3 && this.errorMessage !== "";
-      await setTimeout(() => { }, 5000)
-    } while (retry);
   }
 }
