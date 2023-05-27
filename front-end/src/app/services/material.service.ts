@@ -9,7 +9,7 @@ import { MaterialModel } from '../models/materialModel';
 export class MaterialService {
   constructor(private http: HttpClient) { }
 
-  private baseURL = `https://ecogestor-dev.azurewebsites.net/api/v1/materiais`;
+  private baseURL = `https://ecogestor.azurewebsites.net/api/v1/materiais`;
 
   getAll(): Observable<any> {
     return this.http.get(this.baseURL);
