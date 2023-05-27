@@ -9,7 +9,7 @@ import { RecompensaModel } from '../models/recompensaModel';
 export class RecompensaService {
   constructor(private http: HttpClient) { }
 
-  private baseURL = `https://ecogestor-dev.azurewebsites.net/api/v1/recompensas`;
+  private baseURL = `https://ecogestor.azurewebsites.net/api/v1/recompensas`;
 
   getAll(): Observable<any> {
     return this.http.get(this.baseURL);

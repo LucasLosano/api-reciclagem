@@ -10,7 +10,7 @@ export class UsuarioService {
 
   constructor(private http: HttpClient) { }
 
-  private baseURL = `https://ecogestor-dev.azurewebsites.net/api/v1/usuarios`;
+  private baseURL = `https://ecogestor.azurewebsites.net/api/v1/usuarios`;
 
   getUser(user: UsuarioModel): Observable<any> {
     return this.http.post(this.baseURL + '/autenticar', user);
