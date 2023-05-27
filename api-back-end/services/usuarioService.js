@@ -2,6 +2,9 @@ const autenticacaoDTO = require('../entities/DTOs/autenticacaoDTO');
 const usuarioModel = require('../entities/usuarioModel');
 const setMongoConnection = require('../services/mongoDBConnection');
 
+var bcrypt = require('bcryptjs');
+var lodash = require('lodash');
+
 setMongoConnection();
 
 var service = {};
