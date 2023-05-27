@@ -1,0 +1,30 @@
+<div style="text-align: center; margin: 0 auto;">
+    <h1>Materiais</h1>
+    <button (click)="formFlag = !formFlag" *ngIf="!formFlag" class="add-button" role="button">Adicionar Materiais</button>
+    <button (click)="cancelar()" *ngIf="formFlag" class="cancel-button" role="button">Cancelar</button>
+</div>
+<div style="text-align: center; margin: 0 auto;">
+    <app-material-form [materialEdit]="materialSelect" *ngIf="formFlag"></app-material-form>
+</div>
+<div class="table-wrapper">
+    <table class="fl-table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Material</th>
+                <th>Pontos por kg</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr *ngFor="let material of materiais">
+                <td>{{material.id}}</td>
+                <td>{{material.nomeMaterial}}</td>
+                <td>{{material.pontuacaoPorKg}}</td>
+                <td><button (click)="edit(material)" class="edit-button">Editar</button><button (click)="delete(material.id)" class="delete-button">Deletar</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+

@@ -5,6 +5,15 @@ import { Component } from '@angular/core';
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })
-export class MenuComponent {
+export class MenuComponent { 
+  isSairVisible: boolean = false;
 
+  ngOnInit() {
+    this.isSairVisible = sessionStorage.getItem('token') !== null;
+  }
+  
+  logout(){
+    sessionStorage.removeItem('token');
+    location.reload();
+  }
 }

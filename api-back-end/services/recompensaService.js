@@ -1,12 +1,8 @@
 const recompensaModel = require('../entities/recompensaModel');
 const recompensaDTO = require('../entities/DTOs/recompensaDTO');
 
-var connection = process.env.AZURE_MONGODB;
-var database = process.env.AZURE_DATABASE;
-const mongo = require('mongodb').MongoClient;
-mongo.connect(connection, { useUnifiedTopology: true })
-    .then(conn => global.conn = conn.db(database))
-    .catch(err => console.log(err));
+const setMongoConnection = require('../services/mongoDBConnection');
+setMongoConnection();
 
 var service = {};
 service.getRecompensaById = getRecompensaById;
@@ -26,7 +22,7 @@ async function getRecompensa(){
 }
 
 async function getRecompensaById(id) {
-    let recompensas = global.conn.collection("recompensas");
+    let recompensas = await global.conn.collection("recompensas");
     let recompensa = await recompensas.findOne({id : id});
     if (recompensa === null)
         throw {'status': 404,'mensagem':'Recompensa não existe ou não foi encontrado'};
@@ -34,7 +30,7 @@ async function getRecompensaById(id) {
 }
 
 async function addRecompensa(recompensaNova){
-    var recompensas = global.conn.collection("recompensas");
+    var recompensas = await global.conn.collection("recompensas");
     var recompensa = await recompensas.findOne({ id: recompensaNova.id });
     if (recompensa !== null)
         throw {'status': 400,'mensagem':'Uma outra recompensa ja está utilizando este Id.'};
@@ -45,14 +41,14 @@ async function addRecompensa(recompensaNova){
 
 async function updateRecompensa(recompensaAtualizada){
     await this.getRecompensaById(recompensaAtualizada.id);
-    let recompensas = global.conn.collection("recompensas");  
+    let recompensas = await global.conn.collection("recompensas");  
     await recompensas.updateOne({ id: recompensaAtualizada.id }, { $set: new recompensaModel(recompensaAtualizada) });
     return await this.getRecompensaById(recompensaAtualizada.id);
 }
 
 async function deleteRecompensa(id){
     await this.getRecompensaById(id);
-    let recompensas = global.conn.collection("recompensas");  
+    let recompensas = await global.conn.collection("recompensas");  
     await recompensas.deleteOne({ id });
     return await this.getRecompensa();
 }

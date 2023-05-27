@@ -4,7 +4,7 @@ class pesagemDTO{
     constructor(objeto){
         this.id = objeto.id;
         this.peso = objeto.peso;
-        this.tipoMaterial = objeto.tipoMaterial;
+        this.materialId  = objeto.materialId;
         this.departamentoId = objeto.departamentoId;
         this.dataHora = objeto.dataHora;
     }

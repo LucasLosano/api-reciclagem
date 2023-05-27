@@ -1,7 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { DepartamentoModel } from '../models/departamentoModel';
+import { MaterialModel } from '../models/materialModel';
 import { RecompensaModel } from '../models/recompensaModel';
 import { DepartamentoService } from '../services/departamento.service';
+import { MaterialService } from '../services/material.service';
 import { RecompensaService } from '../services/recompensa.service';
 import { DashboardModel } from '../models/dashboardModel';
 
@@ -11,16 +13,16 @@ import { DashboardModel } from '../models/dashboardModel';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
-  @Input() label1: string = 'Label 1';
-  @Input() label2: string = 'Label 2';
-  @Input() progresso: number = 50;
   departamentos: DepartamentoModel[] = [];
   recompensas: RecompensaModel[] = [];
+  materiais : MaterialModel[] = [];
   departamentosDashboard: DashboardModel[] = [];
   contador: number = 1;
+  pontuacaoMaxima: number = 1;
 
   constructor(
     private departamentoService: DepartamentoService,
+    private materialService: MaterialService,
     private recompensaService: RecompensaService,
   ){}
   ngOnInit() {
@@ -29,12 +31,24 @@ export class DashboardComponent {
   }
 
   getDepartamentos(){
+    var mapMaterialToPoints = new Map();
+    this.materialService.getAll()
+    .subscribe(data => {  
+      if(data.sucesso){
+        this.materiais = data.retorno;
+        this.materiais.forEach(opcao => {
+          mapMaterialToPoints.set( opcao.id, opcao.pontuacaoPorKg );
+        })
+      }
+    })
+    
     this.departamentoService.getAll()
       .subscribe(data => {  
-        if(data.sucesso){
+        if(data.sucesso){       
           this.departamentos = data.retorno;
           this.departamentosDashboard = this.departamentos
-          .map(departamento => new DashboardModel(departamento)));
+          .map(departamento => new DashboardModel(departamento, mapMaterialToPoints))
+          .sort((a, b) => b.pontuacao - a.pontuacao);
         }
       })
   }
@@ -42,8 +56,10 @@ export class DashboardComponent {
   getRecompensas(){
     this.recompensaService.getAll()
       .subscribe(data => {  
-        if(data.sucesso)
+        if(data.sucesso){
           this.recompensas = data.retorno;
+          this.pontuacaoMaxima = Math.max(...this.recompensas.map(recompensa => recompensa.pontosNecessarios))
+        }
       })
   }
 }

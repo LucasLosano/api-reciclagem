@@ -8,38 +8,58 @@ function validarFormulario() {
     if (!peso || !material || !departamento || !link || !identificador) {
         alert('Por favor, preencha todos os campos obrigatórios!');
     } else {
-        console.log(peso);
-        console.log(material);
-        console.log(departamento);
-        console.log(link);
-
         enviarFormulario(peso, material, departamento, link, identificador);
     }
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+    var token = sessionStorage.getItem('token');
+    if(token) {
+        const response = fetch('https://ecogestor-dev.azurewebsites.net/api/v1/materiais', {
+            method: 'GET',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization' : 'Bearer ' + token
+            },
+        }).then(response => response.json())
+        .then(data => {
+          const selectElement = document.getElementById('material'); // Substitua 'seu-select' pelo ID correto do seu elemento <select>
+          data.retorno.forEach(opcao => {
+            const optionElement = document.createElement('option');
+            optionElement.label = opcao.nomeMaterial;
+            optionElement.value = opcao.id;
+            selectElement.appendChild(optionElement);
+          });
+        })
+        .catch(error => {
+          console.error('Erro ao obter as opções:', error);
+        });
+    } else {
+        window.location.assign("ScaleLogin.html");
+    }
+});
+    
 async function enviarFormulario(peso, material, departamento, link, identificador) {
-    console.log(peso);
-    console.log(material);
-    console.log(departamento);
-    console.log(link);
     const data = JSON.stringify({
-        departamento: departamento,
-        peso: peso,
-        nome: material,
-        id: identificador
+        departamentoId:  Number(departamento),
+        peso:  Number(peso),
+        materialId : Number(material),
+        id: Number(identificador)
     });
+    var token = sessionStorage.getItem('token');
+
     const response = await fetch(link, {
         method: 'POST',
         mode: 'cors',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization' : 'Bearer ' + token
         },
         body: data
     });
-
     if (response.ok) {
-        alert('Pedido enviado com sucesso!');
-        console.log(await response.text());
+        alert('Pesagem enviada com sucesso!');
         clearFields();
     } else {
         alert('Houve um erro ao enviar o pedido.');
