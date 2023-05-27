@@ -14,6 +14,15 @@
             <input class="inputStyle" type="text" id="username" name="username" required><br>
             <label class='labelStyle' for="peso">Senha:</label>
             <input class="inputStyle" type="password" id="password" name="password"required><br>
+            
+            <div>
+                <input checked onchange="setAmbiente(this.value)" type="radio" id="dev" name="radAnswer" value="dev">
+                <label for="radAnswer">Dev</label>
+
+                <input onchange="setAmbiente(this.value)" type="radio" id="prod" name="radAnswer" value="prod">
+                <label for="radAnswer">Prod</label>
+            </div>
+
             <input class="inputButton" onclick="logar()" type="submit" value="Logar" />
         </form>
     </div>
