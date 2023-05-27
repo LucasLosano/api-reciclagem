@@ -1,7 +1,5 @@
 var connection = process.env.AZURE_MONGODB;
 var database = process.env.AZURE_DATABASE;
-var bcrypt = require('bcryptjs');
-var lodash = require('lodash');
 const mongo = require('mongodb').MongoClient;
 
 async function setConnection(){
