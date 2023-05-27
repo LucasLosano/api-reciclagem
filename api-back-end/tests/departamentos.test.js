@@ -12,7 +12,9 @@ beforeEach(async () => {
         .then(conn => global.conn = conn.db(database))
         .catch(err => console.log(err));
 
-    this.token = (await request(app).post("/api/v1/usuarios/autenticar").send(requestBody)).body.retorno.token;
+    this.token = await request(app).post("/api/v1/usuarios/autenticar").send(requestBody)
+                .then(result => token = result.body.retorno.token)
+                .catch(err => console.log(err));
 });
 
 describe("GET /api/v1/departamentos", () => {
