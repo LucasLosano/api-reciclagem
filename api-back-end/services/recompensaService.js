@@ -1,12 +1,8 @@
 const recompensaModel = require('../entities/recompensaModel');
 const recompensaDTO = require('../entities/DTOs/recompensaDTO');
 
-var connection = process.env.AZURE_MONGODB;
-var database = process.env.AZURE_DATABASE;
-const mongo = require('mongodb').MongoClient;
-await mongo.connect(connection, { useUnifiedTopology: true })
-    .then(conn => global.conn = conn.db(database))
-    .catch(err => console.log(err));
+const setMongoConnection = require('../services/mongoDBConnection');
+setMongoConnection();
 
 var service = {};
 service.getRecompensaById = getRecompensaById;
