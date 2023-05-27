@@ -6,7 +6,6 @@ import { DepartamentoService } from '../services/departamento.service';
 import { MaterialService } from '../services/material.service';
 import { RecompensaService } from '../services/recompensa.service';
 import { DashboardModel } from '../models/dashboardModel';
-import { map } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -49,7 +48,7 @@ export class DashboardComponent {
           this.departamentos = data.retorno;
           this.departamentosDashboard = this.departamentos
           .map(departamento => new DashboardModel(departamento, mapMaterialToPoints))
-          .sort(departamento => departamento.pontuacao);
+          .sort((a, b) => b.pontuacao - a.pontuacao);
         }
       })
   }

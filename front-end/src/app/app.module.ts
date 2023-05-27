@@ -15,11 +15,15 @@ import { LoginComponent } from './login/login.component';
 import { PrincipalComponent } from './principal/principal.component';
 import { AutenticationService as AuthenticationService } from './services/autentication/authentication.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { MaterialFormComponent } from './material/material-form/material-form.component';
+import { MaterialListComponent } from './material/material-list/material-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DepartamentoListComponent,
+    MaterialFormComponent,
+    MaterialListComponent,
     DepartamentoFormComponent,
     MenuComponent,
     RecompensaListComponent,

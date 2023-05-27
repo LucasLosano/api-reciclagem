@@ -7,6 +7,7 @@ import { UsuarioAutenticadoGuard } from './services/guards/usuario-autenticado.g
 import { UsuarioNaoAutenticadoGuard } from './services/guards/usuario-nao-autenticado.guard';
 import { PrincipalComponent } from './principal/principal.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { MaterialListComponent } from './material/material-list/material-list.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [UsuarioNaoAutenticadoGuard]},
@@ -15,7 +16,8 @@ const routes: Routes = [
     children: [
       { path: '', component: DashboardComponent },
       { path: 'departamentos', component: DepartamentoListComponent },
-      { path: 'recompensas', component: RecompensaListComponent }
+      { path: 'recompensas', component: RecompensaListComponent },
+      { path: 'materiais', component: MaterialListComponent }
     ],
   },
 ];
