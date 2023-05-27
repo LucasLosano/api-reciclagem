@@ -2,20 +2,20 @@ function validarFormulario() {
     const peso = document.getElementById('peso').value;
     const material = document.getElementById('material').value;
     const departamento = document.getElementById('departamento').value;
-    const link = document.getElementById('link').value;
     const identificador = document.getElementById('identificador').value;
 
-    if (!peso || !material || !departamento || !link || !identificador) {
+    if (!peso || !material || !departamento ||  !identificador) {
         alert('Por favor, preencha todos os campos obrigatórios!');
     } else {
-        enviarFormulario(peso, material, departamento, link, identificador);
+        enviarFormulario(peso, material, departamento, identificador);
     }
 }
+var urlGeral = sessionStorage["url"];
 
 document.addEventListener('DOMContentLoaded', function() {
     var token = sessionStorage.getItem('token');
     if(token) {
-        const response = fetch('https://ecogestor-dev.azurewebsites.net/api/v1/materiais', {
+        const response = fetch(urlGeral + 'materiais', {
             method: 'GET',
             mode: 'cors',
             headers: {
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
     
-async function enviarFormulario(peso, material, departamento, link, identificador) {
+async function enviarFormulario(peso, material, departamento, identificador) {
     const data = JSON.stringify({
         departamentoId:  Number(departamento),
         peso:  Number(peso),
@@ -49,7 +49,7 @@ async function enviarFormulario(peso, material, departamento, link, identificado
     });
     var token = sessionStorage.getItem('token');
 
-    const response = await fetch(link, {
+    const response = await fetch(urlGeral + "pesagens", {
         method: 'POST',
         mode: 'cors',
         headers: {
@@ -69,7 +69,6 @@ async function enviarFormulario(peso, material, departamento, link, identificado
 function clearFields(params) {
     document.getElementById('peso').value = "";
     document.getElementById('departamento').value = "";
-    document.getElementById('link').value = "";
     document.getElementById('identificador').value = "";
 }
 var form = document.getElementById("scaleForm");

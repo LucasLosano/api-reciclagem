@@ -32,6 +32,16 @@
     }
 }
 
+function setAmbiente(ambiente){
+  if(ambiente == 'dev')
+    sessionStorage["url"] = "https://ecogestor-dev.azurewebsites.net/api/v1/";
+  else
+    sessionStorage["url"] = "https://ecogestor.azurewebsites.net/api/v1/";
+}
+
 var form = document.getElementById("loginForm");
 function handleForm(event) { event.preventDefault(); }
 form.addEventListener('submit', handleForm);
+
+sessionStorage["url"] = 'https://ecogestor-dev.azurewebsites.net/api/v1/';
+
